@@ -36,13 +36,11 @@ docker-build-server:
     - docker build -f Dockerfile.server --pull -t "${CI_REGISTRY_IMAGE}/server:${version}" .
     - docker push "${CI_REGISTRY_IMAGE}/server:${version}"
   rules:
-    - if: $CI_COMMIT_BRANCH == "dev"
-    - if: $PULL != "true"
+    - if: $CI_COMMIT_BRANCH == "dev" && $PULL != "true"
       exists:
         - Dockerfile.server
       changes:
         - packages/server
-        - .gitlab-ci.yml
 pull:
   script:
     - |
@@ -52,3 +50,5 @@ pull:
       git config pull.rebase true
       git pull joplin dev
       git push origin dev
+  rules:
+    - if: $PULL == "true"
