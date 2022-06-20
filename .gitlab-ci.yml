@@ -42,7 +42,9 @@ docker-build-server:
       changes:
         - packages/server
 pull:
-  image: debian:latest
+  image: alpine:latest
+  before_script:
+    - apk add git
   script:
     - |
       git remote set-url origin https://wcyat:$gitlab_token@gitlab.com/wcyat/joplin
