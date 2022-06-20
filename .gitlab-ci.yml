@@ -37,8 +37,18 @@ docker-build-server:
     - docker push "${CI_REGISTRY_IMAGE}/server:${version}"
   rules:
     - if: $CI_COMMIT_BRANCH == "dev"
+    - if: $PULL != "true"
       exists:
         - Dockerfile.server
       changes:
         - packages/server
         - .gitlab-ci.yml
+pull:
+  script:
+    - |
+      git remote set-url origin https://wcyat:$gitlab_token@gitlab.com/wcyat/joplin
+      git checkout dev
+      git remote add joplin https://github.com/laurent22/joplin
+      git config pull.rebase true
+      git pull joplin dev
+      git push origin dev
