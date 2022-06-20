@@ -10,7 +10,7 @@
 # This template uses one generic job with conditional builds
 # for the default branch and all other (MR) branches.
 
-docker-build:
+docker-build-server:
   # Use the official docker image.
   image: docker:latest
   stage: build
@@ -30,11 +30,11 @@ docker-build:
         tag=":$CI_COMMIT_REF_SLUG"
         echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
       fi
-    - docker build -f Dockerfile.server --pull -t "$CI_REGISTRY_IMAGE${tag}" .
-    - docker push "$CI_REGISTRY_IMAGE${tag}"
+    - docker build -f Dockerfile.server --pull -t "$CI_REGISTRY_IMAGE/server${tag}" .
+    - docker push "$CI_REGISTRY_IMAGE/server${tag}"
     - version=$(node -e "console.log(JSON.parse(require(\"fs\").readFileSync(\"packages/server/package.json\")).version)")
-    - docker build -f Dockerfile.server --pull -t "${CI_REGISTRY_IMAGE}:${version}"
-    - docker pull "${CI_REGISTRY_IMAGE}:${version}"
+    - docker build -f Dockerfile.server --pull -t "${CI_REGISTRY_IMAGE}/server:${version}"
+    - docker pull "${CI_REGISTRY_IMAGE}/server:${version}"
   rules:
     - if: $CI_COMMIT_BRANCH == "dev"
       exists:
