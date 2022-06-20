@@ -45,14 +45,15 @@ pull:
   image: alpine:latest
   before_script:
     - apk add git
+    - git checkout dev
+    - git remote set-url origin https://wcyat:$gitlab_token@gitlab.com/wcyat/joplin
+    - git remote add joplin https://github.com/laurent22/joplin
+    - git config --global user.email "bot@wcyat.me"
+    - git config --global user.name "wcyat-bot"
+    - git config pull.rebase true
+    - git pull origin dev
   script:
     - |
-      git remote set-url origin https://wcyat:$gitlab_token@gitlab.com/wcyat/joplin
-      git checkout dev
-      git remote add joplin https://github.com/laurent22/joplin
-      git config --global user.email "bot@wcyat.me"
-      git config --global user.name "wcyat-bot"
-      git config pull.rebase true
       git pull joplin dev
       git push origin dev
   rules:
