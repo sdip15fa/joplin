@@ -30,10 +30,14 @@ docker-build:
         tag=":$CI_COMMIT_REF_SLUG"
         echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
       fi
-    - cd packages/server
-    - docker build --pull -t "$CI_REGISTRY_IMAGE${tag}" .
+    - docker build -f Dockerfile.server --pull -t "$CI_REGISTRY_IMAGE${tag}" .
     - docker push "$CI_REGISTRY_IMAGE${tag}"
     - version=$(node -e \"console.log(JSON.parse(require("fs").readFileSync("package.json")).version)\")
-    - docker build --pull -t "${CI_REGISTRY_IMAGE}:${version}"
+    - docker build -f Dockerfile.server --pull -t "${CI_REGISTRY_IMAGE}:${version}"
     - docker pull "${CI_REGISTRY_IMAGE}:${version}"
-
+  rules:
+    - if: $CI_COMMIT_BRANCH == dev
+      exists:
+        - Dockerfile.server
+      changes:
+        - packages/server
