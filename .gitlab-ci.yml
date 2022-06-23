@@ -50,7 +50,7 @@ pull:
     - git remote add joplin https://github.com/laurent22/joplin
     - git config --global user.email "bot@wcyat.me"
     - git config --global user.name "wcyat-bot"
-    - git config pull.rebase true
+    - git config pull.rebase false
     - git pull origin dev
   script:
     - |
