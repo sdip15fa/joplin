@@ -19,6 +19,7 @@ docker-build-server:
   before_script:
     - apk add nodejs
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD"
   # Default branch leaves tag empty (= latest tag)
   # All other branches are tagged with the escaped branch name (commit ref slug)
   script:
@@ -31,10 +32,14 @@ docker-build-server:
         echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
       fi
     - docker build -f Dockerfile.server --pull -t "$CI_REGISTRY_IMAGE/server${tag}" .
+    - docker build -f Dockerfile.server --pull -t "$DOCKER_USER/joplin-server${tag}" .
     - docker push "$CI_REGISTRY_IMAGE/server${tag}"
-    - version=$(node -e "console.log(JSON.parse(require(\"fs\").readFileSync(\"packages/server/package.json\")).version)")
+    - docker push "$DOCKER_USER/joplin-server${tag}"
+    - version=$(node -e "console.log(JSON.parse(require(\"fs\").readFileSync(\"packages/server/package.json\")).version)"
     - docker build -f Dockerfile.server --pull -t "${CI_REGISTRY_IMAGE}/server:${version}" .
+    - docker build -f Dockerfile.server --pull -t "$DOCKER_USER/joplin-server:${version}" .
     - docker push "${CI_REGISTRY_IMAGE}/server:${version}"
+    - docker push "$DOCKER_USER/joplin-server:${version}"
   rules:
     - if: $CI_COMMIT_BRANCH == "dev" && $PULL != "true"
       exists:
