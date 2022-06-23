@@ -54,7 +54,8 @@ pull:
     - git pull origin dev
   script:
     - |
-      git pull joplin dev
+      git fetch joplin
+      git merge joplin/dev -m "Pull upstream" --allow-unrelated-histories
       git push origin dev
   rules:
     - if: $PULL == "true"
