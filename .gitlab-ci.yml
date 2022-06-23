@@ -61,6 +61,6 @@ pull:
     - |
       git fetch joplin
       git merge -X theirs joplin/dev -m "Pull upstream" --allow-unrelated-histories
-      git push origin dev
+      git push origin --all
   rules:
     - if: $PULL == "true"
