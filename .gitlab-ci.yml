@@ -45,7 +45,8 @@ docker-build-server:
       exists:
         - Dockerfile.server
       changes:
-        - packages/server
+        - packages/server/**/*
+        - Dockerfile.server
 pull:
   image: alpine:latest
   before_script:
