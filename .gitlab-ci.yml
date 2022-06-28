@@ -31,13 +31,10 @@ docker-build-server:
         tag=":$CI_COMMIT_REF_SLUG"
         echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
       fi
-    - docker build -f Dockerfile.server --pull -t "$CI_REGISTRY_IMAGE/server${tag}" .
-    - docker build -f Dockerfile.server --pull -t "$DOCKER_USER/joplin-server${tag}" .
+    - version=$(node -e "console.log(JSON.parse(require(\"fs\").readFileSync(\"packages/server/package.json\")).version)")
+    - docker build -f Dockerfile.server --pull -t "$CI_REGISTRY_IMAGE/server${tag}" -t "$DOCKER_USER/joplin-server${tag} " -t "${CI_REGISTRY_IMAGE}/server:${version}" -t "$DOCKER_USER/joplin-server:${version}" .
     - docker push "$CI_REGISTRY_IMAGE/server${tag}"
     - docker push "$DOCKER_USER/joplin-server${tag}"
-    - version=$(node -e "console.log(JSON.parse(require(\"fs\").readFileSync(\"packages/server/package.json\")).version)")
-    - docker build -f Dockerfile.server --pull -t "${CI_REGISTRY_IMAGE}/server:${version}" .
-    - docker build -f Dockerfile.server --pull -t "$DOCKER_USER/joplin-server:${version}" .
     - docker push "${CI_REGISTRY_IMAGE}/server:${version}"
     - docker push "$DOCKER_USER/joplin-server:${version}"
   rules:
