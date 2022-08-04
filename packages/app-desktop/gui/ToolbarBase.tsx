@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import ToolbarButton from './ToolbarButton/ToolbarButton';
 import ToggleEditorsButton, { Value } from './ToggleEditorsButton/ToggleEditorsButton';
 const React = require('react');
@@ -23,6 +24,7 @@ class ToolbarBaseComponent extends React.Component<Props, any> {
 			backgroundColor: theme.backgroundColor3,
 			padding: theme.toolbarPadding,
 			paddingRight: theme.mainPadding,
+			overflow: 'scroll',
 		}, this.props.style);
 
 		const groupStyle: any = {
