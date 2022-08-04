@@ -5,7 +5,7 @@
   "main": "main.js",
   "private": true,
   "scripts": {
-    "dist": "rm -rf dist && yarn run electronRebuild && npx electron-builder && cp dist/*.AppImage ~/.local/bin/joplin-desktop",
+    "dist": "rm -rf dist && yarn run electronRebuild && npx electron-builder",
     "build": "gulp build",
     "preinstall": "cd ../lib && yarn pack",
     "postinstall": "rm ../lib/package.tgz && yarn run build",

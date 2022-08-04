@@ -44,6 +44,7 @@ docker-build-server:
       changes:
         - packages/server/**/*
         - Dockerfile.server
+        
 pull:
   image: alpine:latest
   before_script:
