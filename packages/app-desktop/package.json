@@ -5,7 +5,7 @@
   "main": "main.js",
   "private": true,
   "scripts": {
-    "dist": "rm -rf dist && yarn run electronRebuild && npx electron-builder",
+    "dist": "yarn run electronRebuild && npx electron-builder",
     "build": "gulp build",
     "preinstall": "cd ../lib && yarn pack",
     "postinstall": "rm ../lib/package.tgz && yarn run build",
@@ -14,7 +14,8 @@
     "watch": "tsc --watch --preserveWatchOutput --project tsconfig.json",
     "start": "gulp build && electron . --env dev --log-level debug --no-welcome --open-dev-tools",
     "test": "jest",
-    "test-ci": "yarn test"
+    "test-ci": "yarn test",
+    "installApp": "yarn tsc &&  yarn build && rm -rf dist && yarn dist && cp dist/Joplin*.AppImage ~/.local/bin/joplin-desktop"
   },
   "repository": {
     "type": "git",
