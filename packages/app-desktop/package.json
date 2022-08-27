@@ -15,7 +15,7 @@
     "start": "gulp build && electron . --env dev --log-level debug --no-welcome --open-dev-tools",
     "test": "jest",
     "test-ci": "yarn test",
-    "installApp": "yarn tsc &&  yarn build && rm -rf dist && yarn dist && cp dist/*.AppImage ~/.local/bin/joplin-desktop"
+    "installApp": "yarn tsc &&  yarn build && rm -rf dist && yarn dist && rm ~/.local/bin/joplin-desktop && cp dist/*.AppImage ~/.local/bin/joplin-desktop"
   },
   "repository": {
     "type": "git",
