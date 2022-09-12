@@ -7,7 +7,7 @@
   "scripts": {
     "dist": "yarn run electronRebuild && npx electron-builder",
     "build": "gulp build",
-    "preinstall": "cd ../lib && yarn pack",
+    "preinstall": "cd ../lib && yarn tsc && yarn pack",
     "postinstall": "rm ../lib/package.tgz && yarn run build",
     "electronRebuild": "gulp electronRebuild",
     "tsc": "tsc --project tsconfig.json",
@@ -15,7 +15,7 @@
     "start": "gulp build && electron . --env dev --log-level debug --no-welcome --open-dev-tools",
     "test": "jest",
     "test-ci": "yarn test",
-    "installApp": "yarn tsc &&  yarn build && rm -rf dist && yarn dist && rm ~/.local/bin/joplin-desktop && cp dist/*.AppImage ~/.local/bin/joplin-desktop"
+    "installApp": "yarn tsc &&  yarn build && rm -rf dist && yarn dist && rm -f $HOME/.local/bin/joplin-desktop && cp dist/*.AppImage $HOME/.local/bin/joplin-desktop"
   },
   "repository": {
     "type": "git",
@@ -141,7 +141,7 @@
     "@electron/remote": "^2.0.1",
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@joeattardi/emoji-button": "^4.6.0",
-    "@joplin/lib": "~2.9",
+    "@joplin/lib": "../lib/package.tgz",
     "@joplin/pdf-viewer": "~2.9",
     "@joplin/renderer": "~2.9",
     "@types/node-rsa": "^1.1.1",
