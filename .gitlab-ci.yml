@@ -61,7 +61,7 @@ lib:
     - git checkout dev || git switch -c dev
     - rm -rf *
     - cp -r ../joplin/packages/lib/* ../joplin/.yarnrc.yml ../joplin/.yarn .
-    - yarn
+    - yarn install
     - yarn tsc
     - git add -A
     - git commit -a -m update
