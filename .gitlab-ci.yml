@@ -55,15 +55,16 @@ lib:
     - git config --global user.email "bot@wcyat.me"
     - git config --global user.name "wcyat-bot"
   script:
+    - cd packages/lib
+    - yarn install
+    - yarn tsc
     - cd ..
     - git clone https://root:$gitlab_token@gitlab.com/wcyat/joplin-lib
     - cd joplin-lib
     - git checkout dev || git switch -c dev
-    - rm -rf *
+    - rm -rf **/*.js **/*.ts **/*.js.map *.js *.ts *.js.map
     - cp -r ../joplin/packages/lib/* ../joplin/packages/lib/.gitignore ../joplin/.yarnrc.yml ../joplin/.yarn ../joplin/LICENSE .
     - echo "/node_modules" >> .gitignore
-    - yarn install
-    - yarn tsc
     - git add -A
     - git commit -a -m update
     - git push origin dev
