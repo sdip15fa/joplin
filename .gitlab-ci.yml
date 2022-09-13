@@ -47,6 +47,8 @@ docker-build-server:
 
 lib:
   image: node:alpine-18
+  stage: deploy
+  needs: []
   before_script:
     - apk add git
     - git checkout dev
