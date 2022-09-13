@@ -60,7 +60,8 @@ lib:
     - cd joplin-lib
     - git checkout dev || git switch -c dev
     - rm -rf *
-    - cp -r ../joplin/packages/lib/* ../joplin/.yarnrc.yml ../joplin/.yarn .
+    - cp -r ../joplin/packages/lib/* ../joplin/packages/lib/.gitignore ../joplin/.yarnrc.yml ../joplin/.yarn ../joplin/LICENSE .
+    - echo "/node_modules" >> .gitignore
     - yarn install
     - yarn tsc
     - git add -A
