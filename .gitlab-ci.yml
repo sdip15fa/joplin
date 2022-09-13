@@ -46,7 +46,7 @@ docker-build-server:
         - Dockerfile.server
 
 lib:
-  image: node:alpine-18
+  image: node:18-alpine
   stage: deploy
   needs: []
   before_script:
