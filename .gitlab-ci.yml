@@ -59,7 +59,6 @@ lib:
     - git clone https://root:$gitlab_token@gitlab.com/wcyat/joplin-lib
     - cd joplin-lib
     - git checkout dev || git switch -c dev
-    - cd joplin-lib
     - rm -rf *
     - cp -r ../joplin/packages/lib/* ../joplin/.yarnrc.yml ../joplin/.yarn .
     - yarn
