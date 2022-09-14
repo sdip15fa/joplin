@@ -7,8 +7,7 @@
   "scripts": {
     "dist": "yarn run electronRebuild && npx electron-builder",
     "build": "gulp build",
-    "preinstall": "cd ../lib && yarn tsc && yarn pack",
-    "postinstall": "rm ../lib/package.tgz && yarn run build",
+    "postinstall": "yarn run build",
     "electronRebuild": "gulp electronRebuild",
     "tsc": "tsc --project tsconfig.json",
     "watch": "tsc --watch --preserveWatchOutput --project tsconfig.json",
@@ -108,7 +107,6 @@
   },
   "homepage": "https://github.com/laurent22/joplin#readme",
   "devDependencies": {
-    "@joplin/lib": "../lib/package.tgz",
     "@joplin/tools": "~2.9",
     "@testing-library/react-hooks": "^3.4.2",
     "@types/jest": "^26.0.15",
@@ -141,7 +139,7 @@
     "@electron/remote": "^2.0.1",
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@joeattardi/emoji-button": "^4.6.0",
-    "@joplin/lib": "../lib/package.tgz",
+    "@joplin/lib": "https://gitlab.com/wcyat/joplin-lib.git",
     "@joplin/pdf-viewer": "~2.9",
     "@joplin/renderer": "~2.9",
     "@types/node-rsa": "^1.1.1",
