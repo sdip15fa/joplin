@@ -139,7 +139,7 @@
     "@electron/remote": "^2.0.1",
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@joeattardi/emoji-button": "^4.6.0",
-    "@joplin/lib": "https://gitlab.com/wcyat/joplin-lib.git",
+    "@joplin/lib": "~2.9",
     "@joplin/pdf-viewer": "~2.9",
     "@joplin/renderer": "~2.9",
     "@types/node-rsa": "^1.1.1",

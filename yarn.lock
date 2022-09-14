@@ -3820,7 +3820,7 @@ __metadata:
     "@electron/remote": ^2.0.1
     "@fortawesome/fontawesome-free": ^5.13.0
     "@joeattardi/emoji-button": ^4.6.0
-    "@joplin/lib": "https://gitlab.com/wcyat/joplin-lib.git"
+    "@joplin/lib": ~2.9
     "@joplin/pdf-viewer": ~2.9
     "@joplin/renderer": ~2.9
     "@joplin/tools": ~2.9
@@ -4033,19 +4033,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@joplin/htmlpack@npm:~2.8":
-  version: 2.8.1
-  resolution: "@joplin/htmlpack@npm:2.8.1"
-  dependencies:
-    "@joplin/fork-htmlparser2": ^4.1.40
-    css: ^3.0.0
-    datauri: ^4.1.0
-    fs-extra: ^10.0.0
-    html-entities: ^1.2.1
-  checksum: f9924064d9c3f54e93aea0cfa541512d680c41e91ca4217c1562aeb5a94c7155a382917329c55a67835897585372d3efe74c2ce341930e82bbe469aa16381d24
-  languageName: node
-  linkType: hard
-
 "@joplin/htmlpack@workspace:packages/htmlpack, @joplin/htmlpack@~2.9":
   version: 0.0.0-use.local
   resolution: "@joplin/htmlpack@workspace:packages/htmlpack"
@@ -4058,78 +4045,6 @@ __metadata:
     html-entities: ^1.2.1
   languageName: unknown
   linkType: soft
-
-"@joplin/lib@https://gitlab.com/wcyat/joplin-lib.git":
-  version: 2.9.0
-  resolution: "@joplin/lib@https://gitlab.com/wcyat/joplin-lib.git#commit=79cdb6ddcd4af1f846493ae8b39900e064be3ae2"
-  dependencies:
-    "@aws-sdk/client-s3": ^3.34.0
-    "@aws-sdk/s3-request-presigner": ^3.34.0
-    "@joplin/fork-htmlparser2": ^4.1.40
-    "@joplin/fork-sax": ^1.2.44
-    "@joplin/fork-uslug": ^1.0.5
-    "@joplin/htmlpack": ~2.8
-    "@joplin/renderer": ~2.8
-    "@joplin/turndown": ^4.0.62
-    "@joplin/turndown-plugin-gfm": ^1.0.44
-    "@types/nanoid": ^3.0.0
-    async-mutex: ^0.1.3
-    base-64: ^0.1.0
-    base64-stream: ^1.0.0
-    builtin-modules: ^3.1.0
-    chokidar: ^3.4.3
-    color: 3.1.2
-    compare-versions: ^3.6.0
-    css: ^3.0.0
-    diff-match-patch: ^1.0.4
-    es6-promise-pool: ^2.5.0
-    fast-deep-equal: ^3.1.3
-    fast-xml-parser: 3.21.1
-    follow-redirects: ^1.2.4
-    form-data: ^2.1.4
-    fs-extra: ^5.0.0
-    hpagent: ^1.0.0
-    html-entities: ^1.2.1
-    html-minifier: ^3.5.15
-    image-data-uri: ^2.0.0
-    image-type: ^3.0.0
-    immer: ^7.0.14
-    js-yaml: ^4.1.0
-    levenshtein: ^1.0.5
-    markdown-it: ^10.0.0
-    md5: ^2.2.1
-    md5-file: ^4.0.0
-    moment: ^2.29.1
-    multiparty: ^4.2.1
-    mustache: ^4.0.1
-    nanoid: ^3.1.12
-    node-fetch: ^1.7.1
-    node-notifier: ^8.0.0
-    node-persist: ^2.1.0
-    node-rsa: ^1.1.1
-    promise: ^7.1.1
-    query-string: 4.3.4
-    re-reselect: ^4.0.0
-    read-chunk: ^2.1.0
-    redux: ^3.7.2
-    relative: ^3.0.2
-    reselect: ^4.0.0
-    server-destroy: ^1.0.1
-    sprintf-js: ^1.1.2
-    sqlite3: ^5.0.2
-    string-padding: ^1.0.2
-    string-to-stream: ^1.1.0
-    tar: ^4.4.10
-    tcp-port-used: ^0.1.2
-    uglifycss: 0.0.29
-    url-parse: ^1.4.7
-    uuid: ^3.0.1
-    valid-url: ^1.0.9
-    word-wrap: ^1.2.3
-    xml2js: ^0.4.19
-  checksum: 449857fdcc8b9ca2bbca99931eade108de1355bec1abdb6124545ff31a537b22472afa27e17f8eec173c2ed6bd20211a0d023203372b528affe0a3d8d7191860
-  languageName: node
-  linkType: hard
 
 "@joplin/lib@workspace:^, @joplin/lib@workspace:packages/lib, @joplin/lib@~2.9":
   version: 0.0.0-use.local
@@ -4288,37 +4203,6 @@ __metadata:
     react-native: "*"
   languageName: unknown
   linkType: soft
-
-"@joplin/renderer@npm:~2.8":
-  version: 2.8.1
-  resolution: "@joplin/renderer@npm:2.8.1"
-  dependencies:
-    "@joplin/fork-htmlparser2": ^4.1.40
-    "@joplin/fork-uslug": ^1.0.5
-    font-awesome-filetypes: ^2.1.0
-    fs-extra: ^8.1.0
-    highlight.js: 11.1.0
-    html-entities: ^1.2.1
-    json-stringify-safe: ^5.0.1
-    katex: ^0.13.3
-    markdown-it: ^10.0.0
-    markdown-it-abbr: ^1.0.4
-    markdown-it-anchor: ^5.2.5
-    markdown-it-deflist: ^2.0.3
-    markdown-it-emoji: ^1.4.0
-    markdown-it-expand-tabs: ^1.0.13
-    markdown-it-footnote: ^3.0.2
-    markdown-it-ins: ^3.0.0
-    markdown-it-mark: ^3.0.0
-    markdown-it-multimd-table: ^4.1.2
-    markdown-it-sub: ^1.0.0
-    markdown-it-sup: ^1.0.0
-    markdown-it-toc-done-right: ^4.1.0
-    md5: ^2.2.1
-    mermaid: ^8.13.9
-  checksum: 55ac6273289a244e95b361df0b08265a23abc411ffdc0e31a31c71a703d3564ca4c826ca76b5cbdfb8f5c8b2d550dbf35c25010404d66de482f7534d03426313
-  languageName: node
-  linkType: hard
 
 "@joplin/renderer@workspace:packages/renderer, @joplin/renderer@~2.9":
   version: 0.0.0-use.local
