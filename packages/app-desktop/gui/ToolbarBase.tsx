@@ -5,6 +5,7 @@ const React = require('react');
 const { connect } = require('react-redux');
 const { themeStyle } = require('@joplin/lib/theme');
 const ToolbarSpace = require('./ToolbarSpace.min.js');
+const HorizontalScroll = require('react-scroll-horizontal');
 
 interface Props {
 	themeId: number;
@@ -24,7 +25,7 @@ class ToolbarBaseComponent extends React.Component<Props, any> {
 			backgroundColor: theme.backgroundColor3,
 			padding: theme.toolbarPadding,
 			paddingRight: theme.mainPadding,
-			overflow: 'scroll',
+			overflow: 'hidden',
 		}, this.props.style);
 
 		const groupStyle: any = {
@@ -73,15 +74,17 @@ class ToolbarBaseComponent extends React.Component<Props, any> {
 
 		return (
 			<div className="editor-toolbar" style={style}>
-				<div style={groupStyle}>
-					{leftItemComps}
-				</div>
-				<div style={groupStyle}>
-					{centerItemComps}
-				</div>
-				<div style={Object.assign({}, groupStyle, { flex: 1, justifyContent: 'flex-end' })}>
-					{rightItemComps}
-				</div>
+				<HorizontalScroll reverseScroll>
+					<div style={groupStyle}>
+						{leftItemComps}
+					</div>
+					<div style={groupStyle}>
+						{centerItemComps}
+					</div>
+					<div style={Object.assign({}, groupStyle, { flex: 1, justifyContent: 'flex-end' })}>
+						{rightItemComps}
+					</div>
+				</HorizontalScroll>
 			</div>
 		);
 	}
