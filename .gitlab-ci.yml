@@ -45,19 +45,19 @@ docker-build-server:
         - packages/server/**/*
         - Dockerfile.server
 
-build-desktop:
-  image: node:18-alpine
-  stage: build
-  script:
-    - cd packages/app-desktop
-    - yarn
-    - yarn buildApp
-  artifacts:
-    paths:
-      - dist/*.AppImage
-    expire_in: 2 weeks
-  rules:
-    - if: $CI_COMMIT_BRANCH == "dev" && $PULL != "true"
+# build-desktop:
+#  image: node:18-alpine
+#  stage: build
+#  script:
+#    - cd packages/app-desktop
+#    - yarn
+#    - yarn buildApp
+#  artifacts:
+#    paths:
+#      - dist/*.AppImage
+#    expire_in: 2 weeks
+#  rules:
+#    - if: $CI_COMMIT_BRANCH == "dev" && $PULL != "true"
 
 pull:
   image: alpine:latest
