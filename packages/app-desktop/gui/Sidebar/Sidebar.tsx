@@ -79,15 +79,15 @@ function ExpandLink(props: any) {
 }
 
 const renderFolderIcon = (folderIcon: FolderIcon) => {
-	if (!folderIcon) {
-		const defaultFolderIcon: FolderIcon = {
-			dataUrl: '',
-			emoji: '',
-			name: 'far fa-folder',
-			type: FolderIconType.FontAwesome,
-		};
-		return <div style={{ marginRight: 7, display: 'flex' }}><FolderIconBox opacity={0.7} folderIcon={defaultFolderIcon}/></div>;
-	}
+	// if (!folderIcon) {
+	// const defaultFolderIcon: FolderIcon = {
+	// dataUrl: '',
+	// emoji: '',
+	// name: 'far fa-folder',
+	// type: FolderIconType.FontAwesome,
+	// };
+	// return <div style={{ marginRight: 7, display: 'flex' }}><FolderIconBox opacity={0.7} folderIcon={defaultFolderIcon}/></div>;
+	// }
 
 	return <div style={{ marginRight: 7, display: 'flex' }}><FolderIconBox folderIcon={folderIcon}/></div>;
 };
