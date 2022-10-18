@@ -79,7 +79,8 @@ function ExpandLink(props: any) {
 }
 
 const renderFolderIcon = (folderIcon: FolderIcon) => {
-	// if (!folderIcon) {
+	if (!folderIcon) {
+		return <div />;
 	// const defaultFolderIcon: FolderIcon = {
 	// dataUrl: '',
 	// emoji: '',
@@ -87,7 +88,7 @@ const renderFolderIcon = (folderIcon: FolderIcon) => {
 	// type: FolderIconType.FontAwesome,
 	// };
 	// return <div style={{ marginRight: 7, display: 'flex' }}><FolderIconBox opacity={0.7} folderIcon={defaultFolderIcon}/></div>;
-	// }
+	}
 
 	return <div style={{ marginRight: 7, display: 'flex' }}><FolderIconBox folderIcon={folderIcon}/></div>;
 };
