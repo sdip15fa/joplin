@@ -4038,13 +4038,12 @@ __metadata:
     "@testing-library/react-hooks": ^3.4.2
     "@types/jest": ^26.0.15
     "@types/node": ^14.14.6
-    "@types/node-rsa": ^1.1.1
-    "@types/react": 16.9.55
-    "@types/react-redux": 7.1.9
+    "@types/react": 16.14.34
+    "@types/react-redux": 7.1.24
     "@types/styled-components": 5.1.4
     ajv: ^6.5.0
     app-builder-bin: ^1.9.11
-    async-mutex: ^0.1.3
+    async-mutex: ^0.4.0
     babel-cli: ^6.26.0
     babel-preset-react: ^6.24.1
     codemirror: ^5.56.0
@@ -4052,7 +4051,7 @@ __metadata:
     compare-versions: ^3.2.1
     countable: ^3.0.1
     debounce: ^1.2.0
-    electron: 19.0.10
+    electron: 19.1.4
     electron-builder: ^23.0.3
     electron-notarize: ^1.2.1
     electron-rebuild: ^3.2.7
@@ -4209,7 +4208,7 @@ __metadata:
     "@typescript-eslint/parser": ^1.13.0
     coveralls: ^3.0.1
     domelementtype: ^2.0.1
-    domhandler: 3.0.0
+    domhandler: 3.3.0
     domutils: ^2.0.0
     entities: ^2.0.0
     eslint: ^6.0.0
@@ -4273,13 +4272,13 @@ __metadata:
     "@types/node": ^14.14.6
     "@types/node-rsa": ^1.1.1
     "@types/react": ^17.0.20
-    async-mutex: ^0.1.3
+    async-mutex: ^0.4.0
     base-64: ^0.1.0
     base64-stream: ^1.0.0
     builtin-modules: ^3.1.0
     chokidar: ^3.4.3
     clean-html: ^1.5.0
-    color: 3.1.2
+    color: 3.2.1
     compare-versions: ^3.6.0
     css: ^3.0.0
     diff-match-patch: ^1.0.4
@@ -4343,7 +4342,7 @@ __metadata:
     "@joplin/lib": ~2.9
     "@types/jest": ^28.1.6
     "@types/pdfjs-dist": ^2.10.378
-    "@types/react": 16.9.55
+    "@types/react": 16.14.34
     "@types/react-dom": ^16.9.0
     "@types/styled-components": ^5.1.25
     async-mutex: ^0.4.0
@@ -4479,7 +4478,7 @@ __metadata:
     jest-expect-message: ^1.0.2
     jquery: ^3.6.0
     jsdom: ^16.4.0
-    knex: 0.95.4
+    knex: 0.95.15
     koa: 2.8.1
     markdown-it: ^12.0.4
     mustache: ^3.1.0
@@ -4551,8 +4550,8 @@ __metadata:
     browserify: ^14.5.0
     rollup: ^0.50.0
     standard: ^10.0.3
-    turndown: 4.0.1
-    turndown-attendant: 0.0.2
+    turndown: 4.0.2
+    turndown-attendant: 0.0.3
   languageName: unknown
   linkType: soft
 
@@ -7049,19 +7048,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-redux@npm:7.1.9":
-  version: 7.1.9
-  resolution: "@types/react-redux@npm:7.1.9"
-  dependencies:
-    "@types/hoist-non-react-statics": ^3.3.0
-    "@types/react": "*"
-    hoist-non-react-statics: ^3.3.0
-    redux: ^4.0.0
-  checksum: 9de7513cdb2105798168208c57878bc14539b51ba45639b4b9e1e99544dea506cc0bf4e24e4a25ef2845c1169bc51932462799a4bf763bd9c109232f6516af69
-  languageName: node
-  linkType: hard
-
-"@types/react-redux@npm:^7.1.24":
+"@types/react-redux@npm:7.1.24, @types/react-redux@npm:^7.1.24":
   version: 7.1.24
   resolution: "@types/react-redux@npm:7.1.24"
   dependencies:
@@ -7093,13 +7080,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:16.9.55":
-  version: 16.9.55
-  resolution: "@types/react@npm:16.9.55"
+"@types/react@npm:16.14.34":
+  version: 16.14.34
+  resolution: "@types/react@npm:16.14.34"
   dependencies:
     "@types/prop-types": "*"
+    "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: fe0fa5b9783fc00580a82b417b4a1d4916f634290a43388c6ba3ac77b18b31046e81602f474fc878a717d406604dbe73a9d6b804ccefcff7cf46a70f0ac2d06a
+  checksum: a1a105c131bd7fd5cae693c641b3a05eb03c079875fe8e780e616afc54d86e3fa1e8c6433e7a30d2a7f8a1a7681cf1a4f652e9eb48b6abe1f80f7cafe858ebf2
   languageName: node
   linkType: hard
 
@@ -8841,13 +8829,6 @@ __metadata:
   version: 1.0.1
   resolution: "async-limiter@npm:1.0.1"
   checksum: 2b849695b465d93ad44c116220dee29a5aeb63adac16c1088983c339b0de57d76e82533e8e364a93a9f997f28bbfc6a92948cefc120652bd07f3b59f8d75cf2b
-  languageName: node
-  linkType: hard
-
-"async-mutex@npm:^0.1.3":
-  version: 0.1.4
-  resolution: "async-mutex@npm:0.1.4"
-  checksum: 7394d32a9734e54d996d36dd4a4d86246b717cf2d1124b32f9081669d64de0285fa3f460932a404291963f0b0b29811c990b042d4571094fa4f1a520e3e5a15e
   languageName: node
   linkType: hard
 
@@ -11312,7 +11293,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"color-convert@npm:^1.9.0, color-convert@npm:^1.9.1, color-convert@npm:^1.9.3":
+"color-convert@npm:^1.9.0, color-convert@npm:^1.9.3":
   version: 1.9.3
   resolution: "color-convert@npm:1.9.3"
   dependencies:
@@ -11344,7 +11325,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"color-string@npm:^1.5.2, color-string@npm:^1.6.0":
+"color-string@npm:^1.6.0":
   version: 1.9.0
   resolution: "color-string@npm:1.9.0"
   dependencies:
@@ -11363,30 +11344,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"color@npm:3.1.2":
-  version: 3.1.2
-  resolution: "color@npm:3.1.2"
-  dependencies:
-    color-convert: ^1.9.1
-    color-string: ^1.5.2
-  checksum: 58ab3bf57d5acf95917045cac30db57fa8f8c0e92b8d54f2adaf5e843bb17abe0914809bd44b34b9747e6e08a2f0126adc7964e1ca45fe8948f44aad04e853c9
-  languageName: node
-  linkType: hard
-
-"color@npm:^3.1.2, color@npm:^3.1.3":
+"color@npm:3.2.1, color@npm:^3.1.2, color@npm:^3.1.3":
   version: 3.2.1
   resolution: "color@npm:3.2.1"
   dependencies:
     color-convert: ^1.9.3
     color-string: ^1.6.0
   checksum: f81220e8b774d35865c2561be921f5652117638dcda7ca4029262046e37fc2444ac7bbfdd110cf1fd9c074a4ee5eda8f85944ffbdda26186b602dd9bb05f6400
-  languageName: node
-  linkType: hard
-
-"colorette@npm:1.2.1":
-  version: 1.2.1
-  resolution: "colorette@npm:1.2.1"
-  checksum: 06e2fcdb9e2a2c527ac84509a56eadf481cde1768933eb612808f3bb3a9d9872c06b4a9f95e4d0f7befeef8b38307f79b88242d9ea52470d1125520b8116de08
   languageName: node
   linkType: hard
 
@@ -14148,12 +14112,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"domhandler@npm:3.0.0":
-  version: 3.0.0
-  resolution: "domhandler@npm:3.0.0"
+"domhandler@npm:3.3.0":
+  version: 3.3.0
+  resolution: "domhandler@npm:3.3.0"
   dependencies:
     domelementtype: ^2.0.1
-  checksum: 84b8b90776e118ff5324ec2ce4b82a8c7cc795504255efe40472725ad28759019fb5f499a3dac3854f6c5a343b2b88d771c44cb304b59c7db8f469eb8e5b759c
+  checksum: 850e5e9fee7834ab4314811e18bc1f4294d7eafbf6a79ad03cbe50cf964108935c97257ac248944d72a9312b4a18dfa8323e857d23278964dc83b1f124467fa3
   languageName: node
   linkType: hard
 
@@ -14528,16 +14492,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron@npm:19.0.10":
-  version: 19.0.10
-  resolution: "electron@npm:19.0.10"
+"electron@npm:19.1.4":
+  version: 19.1.4
+  resolution: "electron@npm:19.1.4"
   dependencies:
     "@electron/get": ^1.14.1
     "@types/node": ^16.11.26
     extract-zip: ^1.0.3
   bin:
     electron: cli.js
-  checksum: 828198c09cf1f9900e6f6a850761ee24d23e5bf157b1ef1960c2353d0c8d686177019df0082a5e08fe0ee7559a4327794e45022a769f45a0738a7a862dd77840
+  checksum: 93b019dcda4b4bda236c5f01933251eabba4db459e7dcd5bfa046bb5d9a5e0992643e4325b1d700062ead28bbd080164ad5bc92d03ea8aea74161545458db98c
   languageName: node
   linkType: hard
 
@@ -22089,7 +22053,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsdom@npm:^11.3.0":
+"jsdom@npm:^11.9.0":
   version: 11.12.0
   resolution: "jsdom@npm:11.12.0"
   dependencies:
@@ -22642,29 +22606,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knex@npm:0.95.4":
-  version: 0.95.4
-  resolution: "knex@npm:0.95.4"
+"knex@npm:0.95.15":
+  version: 0.95.15
+  resolution: "knex@npm:0.95.15"
   dependencies:
-    colorette: 1.2.1
+    colorette: 2.0.16
     commander: ^7.1.0
-    debug: 4.3.1
+    debug: 4.3.2
     escalade: ^3.1.1
     esm: ^3.2.25
     getopts: 2.2.5
     interpret: ^2.2.0
     lodash: ^4.17.21
-    pg-connection-string: 2.4.0
-    rechoir: ^0.7.0
+    pg-connection-string: 2.5.0
+    rechoir: 0.7.0
     resolve-from: ^5.0.0
     tarn: ^3.0.1
     tildify: 2.0.0
-  peerDependencies:
-    mysql: ^2.18.1
-    mysql2: ^2.2.5
-    pg: ^8.5.1
-    sqlite3: ^5.0.0
-    tedious: ^11.0.5
   peerDependenciesMeta:
     mysql:
       optional: true
@@ -22672,13 +22630,15 @@ __metadata:
       optional: true
     pg:
       optional: true
+    pg-native:
+      optional: true
     sqlite3:
       optional: true
     tedious:
       optional: true
   bin:
     knex: bin/cli.js
-  checksum: a8aafb182660769e11086fc9d58ba6936f651f620676224764d915bb61ca8ce5edc19bbabe65d0497cbee040747bc66e803b1acd5c5ea2c117679ce2dac3086b
+  checksum: f70ad630c1a829b785514070a67d472511877c8fd17ef75df9dcadf9f7a244356a16dc85cd61a1c0a91a24a5a8d6355bfc29d1ff037092d0e1c7dfb3d19f9ff6
   languageName: node
   linkType: hard
 
@@ -27152,13 +27112,6 @@ __metadata:
   version: 2.1.0
   resolution: "performance-now@npm:2.1.0"
   checksum: 534e641aa8f7cba160f0afec0599b6cecefbb516a2e837b512be0adbe6c1da5550e89c78059c7fabc5c9ffdf6627edabe23eb7c518c4500067a898fa65c2b550
-  languageName: node
-  linkType: hard
-
-"pg-connection-string@npm:2.4.0":
-  version: 2.4.0
-  resolution: "pg-connection-string@npm:2.4.0"
-  checksum: 2743cb7f45beb9bc47438cd584c0194937fb2f7278a434e26e3d57305731a4b1b689f64d9bbe85b83cb5f8d093818e72bada6c9d5b954dbfcf2f9b795d5b0054
   languageName: node
   linkType: hard
 
@@ -33380,16 +33333,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"turndown-attendant@npm:0.0.2":
-  version: 0.0.2
-  resolution: "turndown-attendant@npm:0.0.2"
-  dependencies:
-    jsdom: ^11.3.0
-    tape: ^4.8.0
-  checksum: ab8b5e1d572d13d850fe21d57e840bca6fb3689e45af0ade259f42a06495dc96d87fe88191a9e3910ec2be231dc49377c8f6d921297ec0160400ae4e7887e16a
-  languageName: node
-  linkType: hard
-
 "turndown-attendant@npm:0.0.3":
   version: 0.0.3
   resolution: "turndown-attendant@npm:0.0.3"
@@ -33400,12 +33343,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"turndown@npm:4.0.1":
-  version: 4.0.1
-  resolution: "turndown@npm:4.0.1"
+"turndown@npm:4.0.2":
+  version: 4.0.2
+  resolution: "turndown@npm:4.0.2"
   dependencies:
-    jsdom: ^11.3.0
-  checksum: 17d2b94d35d5936e52abe0978e92141ea9207a7b4e9372e68375e5e96ac79c4e322ba84a3108fc482e5750ecfdce916cd75f96d8c7180df57193ce90994ff6fb
+    jsdom: ^11.9.0
+  checksum: de2419e55a12c610417bd949fd4560844fddf4d6568f8de8dcc6a91a56263581b85f9b8cb1be313daed196cf5157b97c9a47ed9016c213eedd588bc49d4e5ce9
   languageName: node
   linkType: hard
 

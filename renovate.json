@@ -9,5 +9,12 @@
 		"packages/app-cli/tests/**",
 		"packages/plugins/**",
 		"Assets/**"
+	],
+	"ignoreDeps": [
+		"react-native",
+		"@types/react-native",
+		"@babel/core",
+		"babel-eslint",
+		"babel-loader"
 	]
 }
