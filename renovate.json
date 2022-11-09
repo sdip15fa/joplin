@@ -3,6 +3,8 @@
 	"extends": [
 		"config:base"
 	],
+	"prConcurrentLimit": 20,
+	"prHourlyLimit": 0,
 	"ignorePaths": [
 		"**/node_modules/**",
 		"**/bower_components/**",
@@ -32,8 +34,15 @@
 		"actions/stale",
 		"babel-eslint",
 		"babel-loader",
+		"babel-preset-react-app",
+		"browserify",
+		"codemirror",
+		"com.android.tools.build:gradle",
+		"cspell",
+		"electron",
 		"jsc-android",
 		"katex",
+		"mermaid",
 		"metro-react-native-babel-preset",
 		"react-native",
 		"rollup",
