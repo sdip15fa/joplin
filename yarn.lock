@@ -4027,6 +4027,7 @@ __metadata:
     react-datetime: 2.16.3
     react-dom: 16.14.0
     react-redux: 5.1.2
+    react-scroll-horizontal: ^1.6.6
     react-select: 2.4.4
     react-test-renderer: 16.14.0
     react-toggle-button: 2.2.0
@@ -4443,7 +4444,7 @@ __metadata:
     rate-limiter-flexible: 2.3.6
     raw-body: 2.4.2
     source-map-support: 0.5.21
-    sqlite3: 4.2.0
+    sqlite3: 5.0.2
     stripe: 8.191.0
     typescript: 4.1.2
     uuid: 8.3.2
@@ -28356,6 +28357,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-scroll-horizontal@npm:^1.6.6":
+  version: 1.6.6
+  resolution: "react-scroll-horizontal@npm:1.6.6"
+  dependencies:
+    react-motion: ^0.5.2
+  peerDependencies:
+    prop-types: ^15.5.4
+    react: ^15.0.0 || ^16.0.0
+    react-dom: ^15.0.0 || ^16.0.0
+  checksum: 01bda478587927afc7f9aed25b26ea05e55d06e999ec9fee9f57e88c5ef0656338f1288d6f900eebdb624a2789f6ab80a178df23d29d80516c187e97c70f9c74
+  languageName: node
+  linkType: hard
+
 "react-select@npm:2.4.4":
   version: 2.4.4
   resolution: "react-select@npm:2.4.4"
@@ -30925,16 +30939,6 @@ __metadata:
   version: 1.0.3
   resolution: "sprintf-js@npm:1.0.3"
   checksum: 19d79aec211f09b99ec3099b5b2ae2f6e9cdefe50bc91ac4c69144b6d3928a640bb6ae5b3def70c2e85a2c3d9f5ec2719921e3a59d3ca3ef4b2fd1a4656a0df3
-  languageName: node
-  linkType: hard
-
-"sqlite3@npm:4.2.0":
-  version: 4.2.0
-  resolution: "sqlite3@npm:4.2.0"
-  dependencies:
-    nan: ^2.12.1
-    node-pre-gyp: ^0.11.0
-  checksum: 4f378ec0ea6b878775af3c31d45925257273d5e13991fbbd28ac855584805c71c5de0e0f616aebadc6d6dea193817e02512d578ff47b99724987ac5c5d6ba222
   languageName: node
   linkType: hard
 
