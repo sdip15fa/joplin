@@ -3,12 +3,15 @@
 	"extends": [
 		"config:base"
 	],
+	"prConcurrentLimit": 20,
+	"prHourlyLimit": 0,
 	"ignorePaths": [
-		"**/node_modules/**",
 		"**/bower_components/**",
+		"**/node_modules/**",
+		"Assets/**",
 		"packages/app-cli/tests/**",
-		"packages/plugins/**",
-		"Assets/**"
+		"packages/app-clipper/popup",
+		"packages/plugins/**"
 	],
 	"ignoreDeps": [
 		"@babel/core",
@@ -32,12 +35,28 @@
 		"actions/stale",
 		"babel-eslint",
 		"babel-loader",
+		"babel-preset-react-app",
+		"browserify",
+		"codemirror",
+		"com.android.tools.build:gradle",
+		"cspell",
+		"electron",
+		"mini-css-extract-plugin",
 		"jsc-android",
 		"katex",
+		"mermaid",
 		"metro-react-native-babel-preset",
 		"react-native",
 		"rollup",
+		"file-loader",
+		"gradle",
+		"html-webpack-plugin",
 		"typedoc",
+		"husky",
+		"lerna",
+		"com.facebook.flipper:flipper",
+		"com.facebook.flipper:flipper-fresco-plugin",
+		"com.facebook.flipper:flipper-network-plugin",
 		"webpack"
 	],
 	"packageRules": [
