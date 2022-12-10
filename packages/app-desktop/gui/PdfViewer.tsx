@@ -83,8 +83,12 @@ export default function PdfViewer(props: Props) {
 		const iframe = iframeRef.current;
 		iframe.contentWindow.addEventListener('message', onMessage_);
 		return () => {
-			iframe.contentWindow.removeEventListener('message', onMessage_);
-		};
+			try {
+				iframe.contentWindow.removeEventListener('message', onMessage_);
+			} catch {
+				// nothing to do
+			}
+ 		};
 	}, [onClose, openExternalViewer, textSelected]);
 
 	const theme = themeStyle(props.themeId);
