@@ -84,6 +84,7 @@
 		"jsc-android",
 		"react-native",
 		"@babel/runtime",
+		"de.undercouch:gradle-download-task",
 
 		// Need special processing when upgrading
 		"katex",
@@ -95,7 +96,7 @@
 	"packageRules": [
 		{
 			"matchUpdateTypes": ["patch"],
-			"automerge": true
+			"automerge": true,
 			"labels": ["automerge"],
 		},
 		{
