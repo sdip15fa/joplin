@@ -1,11 +1,9 @@
+import * as React from 'react';
 import ToolbarButton from './ToolbarButton/ToolbarButton';
-import ToggleEditorsButton, {
-	Value,
-} from './ToggleEditorsButton/ToggleEditorsButton';
-import React = require('react');
-import { connect } from 'react-redux';
-import { themeStyle } from '@joplin/lib/theme';
-const ToolbarSpace = require('./ToolbarSpace.min.js');
+import ToggleEditorsButton, { Value } from './ToggleEditorsButton/ToggleEditorsButton';
+import ToolbarSpace from './ToolbarSpace';
+const { connect } = require('react-redux');
+const { themeStyle } = require('@joplin/lib/theme');
 const HorizontalScroll = require('react-scroll-horizontal');
 
 interface Props {
