@@ -272,7 +272,7 @@ const SidebarComponent = (props: Props) => {
 			new MenuItem(menuUtils.commandToStatefulMenuItem('newFolder'))
 		);
 
-		menu.popup(bridge().window());
+		menu.popup({ window: bridge().window() });
 	}, []);
 
 	const itemContextMenu = useCallback(async (event: any) => {
@@ -424,7 +424,7 @@ const SidebarComponent = (props: Props) => {
 			}
 		}
 
-		menu.popup(bridge().window());
+		menu.popup({ window: bridge().window() });
 	}, [props.folders, props.dispatch, pluginsRef]);
 
 	const folderItem_click = useCallback((folderId: string) => {

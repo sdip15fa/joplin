@@ -1045,8 +1045,7 @@ class Setting extends BaseModel {
 				section: 'note',
 				public: true,
 				appTypes: [AppType.Mobile],
-				show: (settings: any) => settings['editor.beta'],
-				label: () => 'Enable spellcheck in the beta editor',
+				label: () => _('Enable spellcheck in the text editor'),
 				storage: SettingStorage.File,
 				isGlobal: true,
 			},
@@ -1670,6 +1669,12 @@ class Setting extends BaseModel {
 			// 	public: false,
 			// 	storage: SettingStorage.File,
 			// },
+
+			'sync.allowUnsupportedProviders': {
+				value: -1,
+				type: SettingItemType.Int,
+				public: false,
+			},
 
 		};
 
