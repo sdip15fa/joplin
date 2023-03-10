@@ -1,6 +1,6 @@
 {
   "name": "@joplin/server",
-  "version": "2.10.9",
+  "version": "2.10.10",
   "private": true,
   "scripts": {
     "start-dev": "yarn run build && JOPLIN_IS_TESTING=1 nodemon --config nodemon.json --ext ts,js,mustache,css,tsx dist/app.js --env dev",
@@ -54,7 +54,7 @@
     "sqlite3": "5.1.4",
     "stripe": "8.222.0",
     "uuid": "9.0.0",
-    "yargs": "17.7.0",
+    "yargs": "17.7.1",
     "zxcvbn": "4.4.2"
   },
   "devDependencies": {
