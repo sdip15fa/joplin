@@ -17,31 +17,8 @@ function ToolbarBaseComponent(Props: Props) {
 	const childRef = React.useRef<HTMLDivElement>(null);
 	const [horizScroll, setHorizScroll] = React.useState(false);
 
-	React.useEffect(() => {
-		if (childRef.current?.clientWidth > parentRef.current?.clientWidth) {
-			setHorizScroll(true);
-		}
-		window?.addEventListener('resize', () => {
-			setTimeout(() => {
-				if (
-					childRef.current?.clientWidth >
-					parentRef.current?.clientWidth
-				) {
-					setHorizScroll(true);
-				} else {
-					setHorizScroll(false);
-					setTimeout(() => {
-						if (
-							childRef.current?.clientWidth >
-							parentRef.current?.clientWidth
-						) {
-							setHorizScroll(true);
-						}
-					}, 0);
-				}
-			}, 0);
-		});
-	}, []);
+	public render() {
+		const theme = themeStyle(this.props.themeId);
 
 	const theme = themeStyle(Props.themeId);
 	const style: any = Object.assign(
