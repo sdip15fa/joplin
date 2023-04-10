@@ -394,6 +394,7 @@ packages/app-mobile/components/SideMenu.js
 packages/app-mobile/components/TextInput.js
 packages/app-mobile/components/app-nav.js
 packages/app-mobile/components/biometrics/BiometricPopup.js
+packages/app-mobile/components/biometrics/biometricAuthenticate.js
 packages/app-mobile/components/biometrics/sensorInfo.js
 packages/app-mobile/components/getResponsiveValue.js
 packages/app-mobile/components/getResponsiveValue.test.js
@@ -852,6 +853,7 @@ packages/tools/update-readme-download.js
 packages/tools/update-readme-sponsors.js
 packages/tools/updateMarkdownDoc.js
 packages/tools/utils/discourse.js
+packages/tools/utils/loadSponsors.js
 packages/tools/utils/translation.js
 packages/tools/website/build.js
 packages/tools/website/buildTranslations.js

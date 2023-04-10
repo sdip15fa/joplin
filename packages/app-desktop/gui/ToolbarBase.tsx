@@ -4,7 +4,6 @@ import ToggleEditorsButton, { Value } from './ToggleEditorsButton/ToggleEditorsB
 import ToolbarSpace from './ToolbarSpace';
 const { connect } = require('react-redux');
 const { themeStyle } = require('@joplin/lib/theme');
-const HorizontalScroll = require('react-scroll-horizontal');
 
 interface Props {
 	themeId: number;
@@ -15,33 +14,6 @@ interface Props {
 function ToolbarBaseComponent(Props: Props) {
 	const parentRef = React.useRef<HTMLDivElement>(null);
 	const childRef = React.useRef<HTMLDivElement>(null);
-	const [horizScroll, setHorizScroll] = React.useState(false);
-
-	React.useEffect(() => {
-		if (childRef.current?.clientWidth > parentRef.current?.clientWidth) {
-			setHorizScroll(true);
-		}
-		window?.addEventListener('resize', () => {
-			setTimeout(() => {
-				if (
-					childRef.current?.clientWidth >
-					parentRef.current?.clientWidth
-				) {
-					setHorizScroll(true);
-				} else {
-					setHorizScroll(false);
-					setTimeout(() => {
-						if (
-							childRef.current?.clientWidth >
-							parentRef.current?.clientWidth
-						) {
-							setHorizScroll(true);
-						}
-					}, 0);
-				}
-			}, 0);
-		});
-	}, []);
 
 	const theme = themeStyle(Props.themeId);
 	const style: any = Object.assign(
@@ -120,15 +92,9 @@ function ToolbarBaseComponent(Props: Props) {
 
 	return (
 		<div className="editor-toolbar" ref={parentRef} style={style}>
-			{horizScroll ? (
-				<HorizontalScroll reverseScroll style={childStyle}>
-					{children}
-				</HorizontalScroll>
-			) : (
-				<div ref={childRef} style={childStyle}>
-					{children}
-				</div>
-			)}
+			<div ref={childRef} style={childStyle}>
+				{children}
+			</div>
 		</div>
 	);
 }
