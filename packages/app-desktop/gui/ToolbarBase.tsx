@@ -11,92 +11,78 @@ interface Props {
 	items: any[];
 }
 
-function ToolbarBaseComponent(Props: Props) {
-	const parentRef = React.useRef<HTMLDivElement>(null);
-	const childRef = React.useRef<HTMLDivElement>(null);
+class ToolbarBaseComponent extends React.Component<Props, any> {
 
-	const theme = themeStyle(Props.themeId);
-	const style: any = Object.assign(
-		{
+	public render() {
+		const theme = themeStyle(this.props.themeId);
+
+		const style: any = Object.assign({
 			display: 'flex',
 			flexDirection: 'row',
 			boxSizing: 'border-box',
 			backgroundColor: theme.backgroundColor3,
 			padding: theme.toolbarPadding,
 			paddingRight: theme.mainPadding,
-			overflow: 'hidden',
-		},
-		Props.style
-	);
-	const groupStyle: any = {
-		display: 'flex',
-		flexDirection: 'row',
-		boxSizing: 'border-box',
-	};
-	const leftItemComps: any[] = [];
-	const centerItemComps: any[] = [];
-	const rightItemComps: any[] = [];
-	if (Props.items) {
-		for (let i = 0; i < Props.items.length; i++) {
-			const o = Props.items[i];
-			let key = o.iconName ? o.iconName : '';
-			key += o.title ? o.title : '';
-			key += o.name ? o.name : '';
-			const itemType = !('type' in o) ? 'button' : o.type;
-			if (!key) key = `${o.type}_${i}`;
-			const props = Object.assign(
-				{
-					key: key,
-					themeId: Props.themeId,
-				},
-				o
-			);
-			if (o.name === 'toggleEditors') {
-				rightItemComps.push(
-					<ToggleEditorsButton
+		}, this.props.style);
+
+		const groupStyle: any = {
+			display: 'flex',
+			flexDirection: 'row',
+			boxSizing: 'border-box',
+		};
+
+		const leftItemComps: any[] = [];
+		const centerItemComps: any[] = [];
+		const rightItemComps: any[] = [];
+
+		if (this.props.items) {
+			for (let i = 0; i < this.props.items.length; i++) {
+				const o = this.props.items[i];
+				let key = o.iconName ? o.iconName : '';
+				key += o.title ? o.title : '';
+				key += o.name ? o.name : '';
+				const itemType = !('type' in o) ? 'button' : o.type;
+
+				if (!key) key = `${o.type}_${i}`;
+
+				const props = Object.assign(
+					{
+						key: key,
+						themeId: this.props.themeId,
+					},
+					o
+				);
+
+				if (o.name === 'toggleEditors') {
+					rightItemComps.push(<ToggleEditorsButton
 						key={o.name}
 						value={Value.Markdown}
-						themeId={Props.themeId}
+						themeId={this.props.themeId}
 						toolbarButtonInfo={o}
-					/>
-				);
-			} else if (itemType === 'button') {
-				const target = [
-					'historyForward',
-					'historyBackward',
-					'toggleExternalEditing',
-				].includes(o.name)
-					? leftItemComps
-					: centerItemComps;
-				target.push(<ToolbarButton {...props} />);
-			} else if (itemType === 'separator') {
-				centerItemComps.push(<ToolbarSpace {...props} />);
+					/>);
+				} else if (itemType === 'button') {
+					const target = ['historyForward', 'historyBackward', 'toggleExternalEditing'].includes(o.name) ? leftItemComps : centerItemComps;
+					target.push(<ToolbarButton {...props} />);
+				} else if (itemType === 'separator') {
+					centerItemComps.push(<ToolbarSpace {...props} />);
+				}
 			}
 		}
-	}
 
-	const children = [
-		<div style={groupStyle}>{leftItemComps}</div>,
-		<div style={groupStyle}>{centerItemComps}</div>,
-		<div
-			style={Object.assign({}, groupStyle, {
-				flex: 1,
-				justifyContent: 'flex-end',
-			})}
-		>
-			{rightItemComps}
-		</div>,
-	];
-
-	const childStyle = { display: 'flex' };
-
-	return (
-		<div className="editor-toolbar" ref={parentRef} style={style}>
-			<div ref={childRef} style={childStyle}>
-				{children}
+		return (
+			<div className="editor-toolbar" style={style}>
+				<div style={groupStyle}>
+					{leftItemComps}
+				</div>
+				<div style={groupStyle}>
+					{centerItemComps}
+				</div>
+				<div style={Object.assign({}, groupStyle, { flex: 1, justifyContent: 'flex-end' })}>
+					{rightItemComps}
+				</div>
 			</div>
-		</div>
-	);
+		);
+	}
 }
 
 const mapStateToProps = (state: any) => {
