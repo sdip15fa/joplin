@@ -483,6 +483,7 @@ packages/lib/SyncTargetOneDrive.js
 packages/lib/SyncTargetRegistry.js
 packages/lib/Synchronizer.js
 packages/lib/TaskQueue.js
+packages/lib/WelcomeUtils.js
 packages/lib/array.js
 packages/lib/callbackUrlUtils.js
 packages/lib/callbackUrlUtils.test.js
@@ -518,6 +519,7 @@ packages/lib/import-enex-md-gen.js
 packages/lib/import-enex-md-gen.test.js
 packages/lib/import-enex.js
 packages/lib/locale.js
+packages/lib/locale.test.js
 packages/lib/markdownUtils.js
 packages/lib/markdownUtils.test.js
 packages/lib/markdownUtils2.test.js
@@ -844,6 +846,7 @@ packages/renderer/noteStyle.js
 packages/renderer/pathUtils.js
 packages/renderer/utils.js
 packages/tools/build-release-stats.js
+packages/tools/build-welcome.js
 packages/tools/buildServerDocker.js
 packages/tools/buildServerDocker.test.js
 packages/tools/bundleDefaultPlugins.js
