@@ -20,7 +20,7 @@ import Folder from '@joplin/lib/models/Folder';
 import Note from '@joplin/lib/models/Note';
 import Tag from '@joplin/lib/models/Tag';
 import Logger from '@joplin/lib/Logger';
-import { FolderEntity, FolderIcon } from '@joplin/lib/services/database/types';
+import { FolderEntity, FolderIcon, FolderIconType } from '@joplin/lib/services/database/types';
 import stateToWhenClauseContext from '../../services/commands/stateToWhenClauseContext';
 import { store } from '@joplin/lib/reducer';
 import PerFolderSortOrderService from '../../services/sortOrder/PerFolderSortOrderService';
@@ -100,14 +100,13 @@ function ExpandLink(props: any) {
 
 const renderFolderIcon = (folderIcon: FolderIcon) => {
 	if (!folderIcon) {
-		return <div />;
-	// const defaultFolderIcon: FolderIcon = {
-	// dataUrl: '',
-	// emoji: '',
-	// name: 'far fa-folder',
-	// type: FolderIconType.FontAwesome,
-	// };
-	// return <div style={{ marginRight: 7, display: 'flex' }}><FolderIconBox opacity={0.7} folderIcon={defaultFolderIcon}/></div>;
+		const defaultFolderIcon: FolderIcon = {
+			dataUrl: '',
+			emoji: '',
+			name: 'far fa-folder',
+			type: FolderIconType.FontAwesome,
+		};
+		return <div style={{ marginRight: 7, display: 'flex' }}><FolderIconBox opacity={0.7} folderIcon={defaultFolderIcon}/></div>;
 	}
 
 	return <div style={{ marginRight: 7, display: 'flex' }}><FolderIconBox folderIcon={folderIcon}/></div>;
