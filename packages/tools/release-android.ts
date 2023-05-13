@@ -95,7 +95,6 @@ function gradleVersionName(content: string) {
 }
 
 async function createRelease(projectName: string, name: string, tagName: string, version: string): Promise<Release> {
-	const originalContents: Record<string, string> = {};
 	const suffix = version + (name === 'main' ? '' : `-${name}`);
 
 	const patcher = new Patcher(`${rnDir}/patcher-work`);
@@ -111,7 +110,7 @@ async function createRelease(projectName: string, name: string, tagName: string,
 	}
 
 	if (name !== 'vosk') {
-		await patcher.updateFileContent(`${rnDir}/android/app/build.gradle`, async (_content: string) => {
+		await patcher.updateFileContent(`${rnDir}/services/voiceTyping/vosk.ts`, async (_content: string) => {
 			return readFile(`${rnDir}/services/voiceTyping/vosk.dummy.ts`, 'utf8');
 		});
 
@@ -120,6 +119,8 @@ async function createRelease(projectName: string, name: string, tagName: string,
 			content = content.replace(/(\s+)"applicationId "net.cozic.joplin"/, '$1"applicationId "net.cozic.joplin-mod"');
 			return content;
 		});
+
+		await patcher.removeFile(`${rnDir}/android/app/src/main/assets/model-fr-fr`);
 	}
 
 	const apkFilename = `joplin-v${suffix}.apk`;
@@ -177,10 +178,7 @@ async function createRelease(projectName: string, name: string, tagName: string,
 		await copy(builtApk, `${releaseDir}/joplin-latest.apk`);
 	}
 
-	for (const filename in originalContents) {
-		const content = originalContents[filename];
-		await writeFile(filename, content);
-	}
+	await patcher.restore();
 
 	return {
 		downloadUrl: downloadUrl,
