@@ -95,7 +95,6 @@ function gradleVersionName(content: string) {
 }
 
 async function createRelease(projectName: string, name: string, tagName: string, version: string): Promise<Release> {
-	const originalContents: Record<string, string> = {};
 	const suffix = version + (name === 'main' ? '' : `-${name}`);
 
 	const patcher = new Patcher(`${rnDir}/patcher-work`);
@@ -111,13 +110,22 @@ async function createRelease(projectName: string, name: string, tagName: string,
 	}
 
 	if (name !== 'vosk') {
-		await patcher.updateFileContent(`${rnDir}/android/app/build.gradle`, async (_content: string) => {
+		await patcher.updateFileContent(`${rnDir}/services/voiceTyping/vosk.ts`, async (_content: string) => {
 			return readFile(`${rnDir}/services/voiceTyping/vosk.dummy.ts`, 'utf8');
 		});
 
 		await patcher.updateFileContent(`${rnDir}/android/app/build.gradle`, async (content: string) => {
 			content = content.replace(/\s+"react-native-vosk": ".*",/, '');
-			content = content.replace(/(\s+)"applicationId "net.cozic.joplin"/, '$1"applicationId "net.cozic.joplin-mod"');
+			return content;
+		});
+
+		await patcher.removeFile(`${rnDir}/android/app/src/main/assets/model-fr-fr`);
+	}
+
+	if (name === 'vosk') {
+		await patcher.updateFileContent(`${rnDir}/android/app/build.gradle`, async (content: string) => {
+			content = content.replace(/(\s+)applicationId "net.cozic.joplin"/, '$1applicationId "net.cozic.joplin.mod"');
+			content = content.replace(/(\s+)versionName "(\d+\.\d+\.\d+)"/, '$1versionName "$2-mod"');
 			return content;
 		});
 	}
@@ -142,7 +150,7 @@ async function createRelease(projectName: string, name: string, tagName: string,
 	let restoreDir = null;
 	let apkBuildCmd = '';
 	let apkCleanBuild = '';
-	const apkBuildCmdArgs = ['assembleRelease', `-PbuildDir=${buildDirName}`]; // TOOD: change build dir, delete before
+	const apkBuildCmdArgs = ['assembleRelease', `-PbuildDir=${buildDirName}`];
 	if (await fileExists('/mnt/c/Windows/System32/cmd.exe')) {
 		await execCommandWithPipes('/mnt/c/Windows/System32/cmd.exe', ['/c', `cd packages\\app-mobile\\android && gradlew.bat ${apkBuildCmd}`]);
 		apkBuildCmd = '';
@@ -177,10 +185,7 @@ async function createRelease(projectName: string, name: string, tagName: string,
 		await copy(builtApk, `${releaseDir}/joplin-latest.apk`);
 	}
 
-	for (const filename in originalContents) {
-		const content = originalContents[filename];
-		await writeFile(filename, content);
-	}
+	await patcher.restore();
 
 	return {
 		downloadUrl: downloadUrl,
@@ -250,11 +255,17 @@ async function main() {
 		releaseFiles[releaseName] = await createRelease(projectName, releaseName, tagName, version);
 	}
 
+	console.info('Created releases:');
+	console.info(releaseFiles);
+
 	const voskRelease = releaseFiles['vosk'];
-	delete releaseFiles['vosk'];
 
 	await uploadToGitHubRelease(mainProjectName, tagName, isPreRelease, releaseFiles);
-	await uploadToGitHubRelease(modProjectName, tagName, isPreRelease, { 'vosk': voskRelease });
+
+	if (voskRelease) {
+		delete releaseFiles['vosk'];
+		await uploadToGitHubRelease(modProjectName, tagName, isPreRelease, { 'vosk': voskRelease });
+	}
 
 	console.info(`Main download URL: ${releaseFiles['main'].downloadUrl}`);
 
