@@ -1,5 +1,26 @@
 # Joplin changelog
 
+## [v2.11.6](https://github.com/laurent22/joplin/releases/tag/v2.11.6) (Pre-release) - 2023-05-31T20:13:08Z
+
+- Improved: When resetting the master password, also create a new master key with that password ([e647775](https://github.com/laurent22/joplin/commit/e647775))
+- Fixed: Don't display "obsolete encryption method" message if the key is disabled ([#8025](https://github.com/laurent22/joplin/issues/8025)) ([#7933](https://github.com/laurent22/joplin/issues/7933) by [@gitstart](https://github.com/gitstart))
+- Fixed: Improve selection of active E2EE key ([#8254](https://github.com/laurent22/joplin/issues/8254))
+- Fixed: Improve sidebar workaround for Linux w/Intel GPU ([#8126](https://github.com/laurent22/joplin/issues/8126)) ([#7506](https://github.com/laurent22/joplin/issues/7506) by Calum Lind)
+- Fixed: Preserve Table Alignment When Editing a Note With the Rich Text Editor  ([#8214](https://github.com/laurent22/joplin/issues/8214)) ([#6431](https://github.com/laurent22/joplin/issues/6431) by Christopher O'Toole)
+
+## [v2.11.5](https://github.com/laurent22/joplin/releases/tag/v2.11.5) (Pre-release) - 2023-05-28T00:41:40Z
+
+- Improved: Updated packages jsdom (v21.1.2), markdown-it-multimd-table (v4.2.2), react-select (v5.7.3), sass (v1.62.1), sharp (v0.32.1), tar (v6.1.14), yargs (v17.7.2)
+- Fixed: Fix slow startup time ([#8087](https://github.com/laurent22/joplin/issues/8087))
+- Security: Disable SVG tag support in editor to prevent XSS ([caf6606](https://github.com/laurent22/joplin/commit/caf6606)) (Vulnerability discovered by [RyotaK](https://ryotak.net/))
+- Security: Prevent XSS by sanitizing certain HTML attributes ([9e90d90](https://github.com/laurent22/joplin/commit/9e90d90)) (Vulnerability discovered by [RyotaK](https://ryotak.net/))
+
+## [v2.10.19](https://github.com/laurent22/joplin/releases/tag/v2.10.19) - 2023-05-17T12:25:41Z
+
+- Improved: Improved handling of items with duplicate IDs when synchronising with Joplin Cloud or Server ([d4c43a8](https://github.com/laurent22/joplin/commit/d4c43a8))
+- Security: Fixed possible XSS injection (CVE-2023-33726) ([b26bc9e](https://github.com/laurent22/joplin/commit/b26bc9e)) (Discovery and PoC by [@maple3142](https://twitter.com/maple3142))
+- Security: Prevent XSS and potential RCE when using a special HTML tag (CVE-2023-33727) ([19bdda2](https://github.com/laurent22/joplin/commit/19bdda2)) (Discovery and PoC by [Yaniv Nizry](https://twitter.com/YNizry) ([SonarSource](https://www.sonarsource.com/)))
+
 ## [v2.11.4](https://github.com/laurent22/joplin/releases/tag/v2.11.4) (Pre-release) - 2023-05-16T10:02:21Z
 
 - Fixed: Fix slow startup time ([#8087](https://github.com/laurent22/joplin/issues/8087))
@@ -113,6 +134,15 @@
 - Fixed: Markdown editor not surrounding highlighted text with backticks ([#7697](https://github.com/laurent22/joplin/issues/7697)) ([#7694](https://github.com/laurent22/joplin/issues/7694) by Helmut K. C. Tessarek)
 - Fixed: Mermaid images are incorrectly sized when exported as PNG ([#7546](https://github.com/laurent22/joplin/issues/7546)) ([#7521](https://github.com/laurent22/joplin/issues/7521) by Adarsh Singh)
 - Fixed: Note editor scrolls back to top when editing certain notes ([#7617](https://github.com/laurent22/joplin/issues/7617))
+
+## [v2.10.5](https://github.com/laurent22/joplin/releases/tag/v2.10.5) - 2023-01-16T15:00:53Z
+
+- Fixed: Api: Fixes [#6862](https://github.com/laurent22/joplin/issues/6862) set todo related fields when adding or changing a todo ([#7395](https://github.com/laurent22/joplin/issues/7395) by [@Wartijn](https://github.com/Wartijn))
+- Fixed: Fixed crash when loading certain plugins ([#7598](https://github.com/laurent22/joplin/issues/7598))
+- Fixed: Fixes crash when changing note time from properties dialog ([6b9a270](https://github.com/laurent22/joplin/commit/6b9a270))
+- Fixed: Hyperlink insertion no longer works in Markdown editor ([#7605](https://github.com/laurent22/joplin/issues/7605))
+- Fixed: Optimise sidebar rendering speed ([#7610](https://github.com/laurent22/joplin/issues/7610))
+- Fixed: Try to replace the external link with internal link when attachment file is pasted in Markdown editor ([#6865](https://github.com/laurent22/joplin/issues/6865)) ([#6211](https://github.com/laurent22/joplin/issues/6211) by Self Not Found)
 
 ## [v2.10.4](https://github.com/laurent22/joplin/releases/tag/v2.10.4) (Pre-release) - 2023-01-05T13:09:20Z
 

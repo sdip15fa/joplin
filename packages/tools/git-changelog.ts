@@ -12,6 +12,7 @@ interface LogEntry {
 }
 
 enum Platform {
+	Unknown = 'unknown',
 	Android = 'android',
 	Ios = 'ios',
 	Desktop = 'desktop',
@@ -94,7 +95,8 @@ function platformFromTag(tagName: string): Platform {
 	if (tagName.indexOf('cloud') === 0) return Platform.Cloud;
 	if (tagName.indexOf('plugin-generator') === 0) return Platform.PluginGenerator;
 	if (tagName.indexOf('plugin-repo-cli') === 0) return Platform.PluginRepoCli;
-	throw new Error(`Could not determine platform from tag: "${tagName}"`);
+	return Platform.Unknown;
+	// throw new Error(`Could not determine platform from tag: "${tagName}"`);
 }
 
 export const filesApplyToPlatform = (files: string[], platform: string): boolean => {
@@ -282,7 +284,7 @@ function filterLogs(logs: LogEntry[], platform: Platform) {
 }
 
 function formatCommitMessage(commit: string, msg: string, author: Author, options: Options): string {
-	options = Object.assign({}, { publishFormat: 'full' }, options);
+	options = { publishFormat: 'full', ...options };
 
 	let output = '';
 
