@@ -1,6 +1,6 @@
 {
   "name": "@joplin/app-desktop",
-  "version": "2.11.8",
+  "version": "2.11.9",
   "description": "Joplin for Desktop",
   "main": "main.js",
   "private": true,
@@ -128,7 +128,7 @@
     "js-sha512": "0.8.0",
     "nan": "2.17.0",
     "react-test-renderer": "18.2.0",
-    "typescript": "4.9.5"
+    "typescript": "5.0.2"
   },
   "optionalDependencies": {
     "7zip-bin-linux": "^1.0.1",
