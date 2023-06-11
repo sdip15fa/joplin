@@ -694,12 +694,18 @@ class NoteScreenComponent extends BaseScreenComponent {
 
 		const newNote = { ...this.state.note };
 
-		if (this.state.mode === 'edit' && !!this.selection) {
-			const newText = `\n${resourceTag}\n`;
+		if (this.state.mode === 'edit') {
+			let newText = '';
 
-			const prefix = newNote.body.substring(0, this.selection.start);
-			const suffix = newNote.body.substring(this.selection.end);
-			newNote.body = `${prefix}${newText}${suffix}`;
+			if (this.selection) {
+				newText = `\n${resourceTag}\n`;
+				const prefix = newNote.body.substring(0, this.selection.start);
+				const suffix = newNote.body.substring(this.selection.end);
+				newNote.body = `${prefix}${newText}${suffix}`;
+			} else {
+				newText = `\n${resourceTag}`;
+				newNote.body = `${newNote.body}\n${newText}`;
+			}
 
 			if (this.useEditorBeta()) {
 				// The beta editor needs to be explicitly informed of changes
@@ -787,6 +793,12 @@ class NoteScreenComponent extends BaseScreenComponent {
 	}
 
 	public async onAlarmDialogAccept(date: Date) {
+		const response = await checkPermissions(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
+		if (response !== PermissionsAndroid.RESULTS.GRANTED) {
+			logger.warn('POST_NOTIFICATION permission was not granted');
+			return;
+		}
+
 		const newNote = { ...this.state.note };
 		newNote.todo_due = date ? date.getTime() : 0;
 
