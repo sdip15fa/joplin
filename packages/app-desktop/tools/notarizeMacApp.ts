@@ -1,14 +1,23 @@
-const fs = require('fs');
-const path = require('path');
-const electron_notarize = require('electron-notarize');
+import { existsSync } from 'fs';
+import { join } from 'path';
+import { notarize } from '@electron/notarize';
 const execCommand = require('./execCommand');
 
-function isDesktopAppTag(tagName) {
+function isDesktopAppTag(tagName: string) {
 	if (!tagName) return false;
 	return tagName[0] === 'v';
 }
 
-module.exports = async function(params) {
+interface Params {
+	appOutDir: string;
+	packager: {
+		appInfo: {
+			productFilename: string;
+		};
+	};
+}
+
+export default async (params: Params) => {
 	if (process.platform !== 'darwin') return;
 
 	console.info('Checking if notarization should be done...');
@@ -26,8 +35,8 @@ module.exports = async function(params) {
 	// Same appId in electron-builder.
 	const appId = 'net.cozic.joplin-desktop';
 
-	const appPath = path.join(params.appOutDir, `${params.packager.appInfo.productFilename}.app`);
-	if (!fs.existsSync(appPath)) {
+	const appPath = join(params.appOutDir, `${params.packager.appInfo.productFilename}.app`);
+	if (!existsSync(appPath)) {
 		throw new Error(`Cannot find application at: ${appPath}`);
 	}
 
@@ -40,7 +49,7 @@ module.exports = async function(params) {
 	}, 60000);
 
 	try {
-		await electron_notarize.notarize({
+		await notarize({
 			appBundleId: appId,
 			appPath: appPath,
 
@@ -58,7 +67,12 @@ module.exports = async function(params) {
 			// Use this to get it:
 			//
 			// xcrun altool --list-providers -u APPLE_ID -p APPLE_ID_PASSWORD
-			ascProvider: process.env.APPLE_ASC_PROVIDER,
+			// ascProvider: process.env.APPLE_ASC_PROVIDER,
+
+			// In our case, the team ID is the same as the legacy ASC_PROVIDER
+			teamId: process.env.APPLE_ASC_PROVIDER,
+
+			tool: 'notarytool',
 		});
 	} catch (error) {
 		console.error(error);
