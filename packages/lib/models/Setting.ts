@@ -6,7 +6,7 @@ import Database from '../database';
 import SyncTargetRegistry from '../SyncTargetRegistry';
 import time from '../time';
 import FileHandler, { SettingValues } from './settings/FileHandler';
-import Logger from '../Logger';
+import Logger from '@joplin/utils/Logger';
 import mergeGlobalAndLocalSettings from '../services/profileConfig/mergeGlobalAndLocalSettings';
 import splitGlobalAndLocalSettings from '../services/profileConfig/splitGlobalAndLocalSettings';
 import JoplinError from '../JoplinError';
@@ -716,6 +716,12 @@ class Setting extends BaseModel {
 				label: () => _('Joplin Cloud password'),
 				secure: true,
 			},
+
+			'sync.10.inboxEmail': { value: '', type: SettingItemType.String, public: false },
+
+			'sync.10.inboxId': { value: '', type: SettingItemType.String, public: false },
+
+			'sync.10.canUseSharePermissions': { value: false, type: SettingItemType.Bool, public: false },
 
 			'sync.5.syncTargets': { value: {}, type: SettingItemType.Object, public: false },
 
@@ -1714,10 +1720,6 @@ class Setting extends BaseModel {
 				label: () => _('Voice typing language files (URL)'),
 				section: 'note',
 			},
-
-			'emailToNote.inboxEmail': { value: '', type: SettingItemType.String, public: false },
-
-			'emailToNote.inboxJopId': { value: '', type: SettingItemType.String, public: false },
 		};
 
 		this.metadata_ = { ...this.buildInMetadata_ };
