@@ -4883,7 +4883,7 @@ __metadata:
     "@joplin/tools": ~2.12
     "@joplin/utils": ~2.12
     "@koa/cors": 3.4.3
-    "@rmp135/sql-ts": 1.17.0
+    "@rmp135/sql-ts": 1.18.0
     "@types/formidable": 2.0.6
     "@types/fs-extra": 11.0.1
     "@types/jest": 29.5.3
@@ -4943,7 +4943,7 @@ __metadata:
     "@joplin/lib": ~2.12
     "@joplin/renderer": ~2.12
     "@joplin/utils": ~2.12
-    "@rmp135/sql-ts": 1.17.0
+    "@rmp135/sql-ts": 1.18.0
     "@types/fs-extra": 11.0.1
     "@types/jest": 29.5.3
     "@types/mustache": 4.2.2
@@ -5006,17 +5006,6 @@ __metadata:
     turndown-attendant: 0.0.3
   languageName: unknown
   linkType: soft
-
-"@joplin/utils@npm:~2.11":
-  version: 2.11.2
-  resolution: "@joplin/utils@npm:2.11.2"
-  dependencies:
-    execa: 5.1.1
-    fs-extra: 11.1.1
-    node-fetch: 2.6.7
-  checksum: 95ba577e6e5f7fb2c10e6bdb2694fdaaef31d6f650b5917b70ec35cb720b1357e182458cce894395f7109298847c21ad78932df6d3394fdbc315ecb5fde28630
-  languageName: node
-  linkType: hard
 
 "@joplin/utils@workspace:packages/utils, @joplin/utils@~2.12":
   version: 0.0.0-use.local
@@ -6949,9 +6938,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rmp135/sql-ts@npm:1.17.0":
-  version: 1.17.0
-  resolution: "@rmp135/sql-ts@npm:1.17.0"
+"@rmp135/sql-ts@npm:1.18.0":
+  version: 1.18.0
+  resolution: "@rmp135/sql-ts@npm:1.18.0"
   dependencies:
     change-case: ^4.1.2
     handlebars: ^4.7.7
@@ -6979,7 +6968,7 @@ __metadata:
       optional: true
   bin:
     sql-ts: bin/sql-ts
-  checksum: 88bdd92138a592d900755a73f132af5d1214f644a4f1051959faa59ac693e6c2111a27a89bc39ee45bebe1feadcf82022da59a3f8dbabfa2b9d5b3790ea0d5b2
+  checksum: c1a9bf4a4447fab0823e5200ed9c879900c9c744a5f0ff2f49a96b1e072035e37cb58e7be5e19cc6e0ab4e4446bdaeebe25acb7c2b551221b26b9a88e3542f00
   languageName: node
   linkType: hard
 
@@ -29455,7 +29444,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "root@workspace:."
   dependencies:
-    "@joplin/utils": ~2.11
+    "@joplin/utils": ~2.12
     "@seiyab/eslint-plugin-react-hooks": 4.5.1-beta.0
     "@types/fs-extra": 11.0.1
     "@typescript-eslint/eslint-plugin": 5.60.0
