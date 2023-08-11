@@ -4529,7 +4529,7 @@ __metadata:
     "@react-native-community/push-notification-ios": 1.11.0
     "@react-native-community/slider": 4.4.2
     "@testing-library/jest-native": 5.4.2
-    "@testing-library/react-native": 12.1.2
+    "@testing-library/react-native": 12.1.3
     "@tsconfig/react-native": 2.0.2
     "@types/fs-extra": 11.0.1
     "@types/jest": 29.5.3
@@ -4567,7 +4567,7 @@ __metadata:
     react-native-camera: 4.2.1
     react-native-device-info: 10.7.0
     react-native-dialogbox: 0.6.10
-    react-native-document-picker: 8.2.1
+    react-native-document-picker: 9.0.1
     react-native-drawer-layout: 3.2.1
     react-native-dropdownalert: 4.5.1
     react-native-exit-app: 1.1.0
@@ -4734,7 +4734,7 @@ __metadata:
     relative: 3.0.2
     reselect: 4.1.8
     server-destroy: 1.0.1
-    sharp: 0.32.3
+    sharp: 0.32.4
     sprintf-js: 1.1.2
     sqlite3: 5.1.6
     string-padding: 1.0.2
@@ -4968,7 +4968,7 @@ __metadata:
     request: 2.88.2
     rss: 1.2.2
     sass: 1.63.6
-    sharp: 0.32.3
+    sharp: 0.32.4
     source-map-support: 0.5.21
     sqlite3: 5.1.6
     typescript: 5.1.3
@@ -7231,9 +7231,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/react-native@npm:12.1.2":
-  version: 12.1.2
-  resolution: "@testing-library/react-native@npm:12.1.2"
+"@testing-library/react-native@npm:12.1.3":
+  version: 12.1.3
+  resolution: "@testing-library/react-native@npm:12.1.3"
   dependencies:
     pretty-format: ^29.0.0
   peerDependencies:
@@ -7244,7 +7244,7 @@ __metadata:
   peerDependenciesMeta:
     jest:
       optional: true
-  checksum: 912fc961f213a8fa171b9b980d6f4edd8f11a012498fcf1b8e0d3ac1d20e85b61469a80914fda893aa48cb0d4b3f6075ec2723c58dae96eeac0ee1cd6e6daa3e
+  checksum: afc472bdf1f3b966d292749d9f1d4dc70112b7124935aa60f7d2e928fceef7b79dc4e7241b0461876f2ecf740440c6e400756075f684ecf9341c7528d3592603
   languageName: node
   linkType: hard
 
@@ -14244,6 +14244,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"detect-libc@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "detect-libc@npm:2.0.2"
+  checksum: 2b2cd3649b83d576f4be7cc37eb3b1815c79969c8b1a03a40a4d55d83bc74d010753485753448eacb98784abf22f7dbd3911fd3b60e29fda28fed2d1a997944d
+  languageName: node
+  linkType: hard
+
 "detect-newline@npm:^3.0.0":
   version: 3.1.0
   resolution: "detect-newline@npm:3.1.0"
@@ -17397,7 +17404,7 @@ __metadata:
   resolution: "generate-plugin-doc@workspace:packages/generate-plugin-doc"
   dependencies:
     typedoc: 0.17.8
-    typescript: 5.0.4
+    typescript: 4.7.4
   languageName: unknown
   linkType: soft
 
@@ -21042,7 +21049,7 @@ __metadata:
     proper-lockfile: 4.1.2
     read-chunk: 2.1.0
     server-destroy: 1.0.1
-    sharp: 0.32.3
+    sharp: 0.32.4
     sprintf-js: 1.1.2
     sqlite3: 5.1.6
     string-padding: 1.0.2
@@ -27786,9 +27793,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-document-picker@npm:8.2.1":
-  version: 8.2.1
-  resolution: "react-native-document-picker@npm:8.2.1"
+"react-native-document-picker@npm:9.0.1":
+  version: 9.0.1
+  resolution: "react-native-document-picker@npm:9.0.1"
   dependencies:
     invariant: ^2.2.4
   peerDependencies:
@@ -27798,7 +27805,7 @@ __metadata:
   peerDependenciesMeta:
     react-native-windows:
       optional: true
-  checksum: 575d3bec391044fdaf8d4d740a115a0b3e5cbafdb893ce19157b0c5fefb052c208b9db6d352e171d358c723612e47fe67cda4634a60d3a245a30ff103b1cb84c
+  checksum: a8ad0bc2ed13290e8d7ff5f77aa7e35ffda9fa380a7d01d1286111e92656415985d61469a50567b8bcb67e42c41a36b89e879d0d08b40d3fdda171eaa08721e4
   languageName: node
   linkType: hard
 
@@ -30020,12 +30027,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sharp@npm:0.32.3":
-  version: 0.32.3
-  resolution: "sharp@npm:0.32.3"
+"sharp@npm:0.32.4":
+  version: 0.32.4
+  resolution: "sharp@npm:0.32.4"
   dependencies:
     color: ^4.2.3
-    detect-libc: ^2.0.1
+    detect-libc: ^2.0.2
     node-addon-api: ^6.1.0
     node-gyp: latest
     prebuild-install: ^7.1.1
@@ -30033,7 +30040,7 @@ __metadata:
     simple-get: ^4.0.1
     tar-fs: ^3.0.4
     tunnel-agent: ^0.6.0
-  checksum: 8a6ed0d00bd4d3d6ba92c392fe1f00a4a207f138257a4d903ce5afe5c6d7f684b5218c5b4e8df1097aac960ac10e0114c823f6a8a7e18255bf4a8ec364087051
+  checksum: 52e3cfe8fbba2623a9b935be8a3d00d6993a2c56c775ac5cc89b273826db95f029f68a0029a37f96dcb6790aa2e3c05a02599035535b319f50ab31f5d86a13f0
   languageName: node
   linkType: hard
 
@@ -32899,13 +32906,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:4 - 5, typescript@npm:5.0.4":
+"typescript@npm:4 - 5":
   version: 5.0.4
   resolution: "typescript@npm:5.0.4"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 82b94da3f4604a8946da585f7d6c3025fff8410779e5bde2855ab130d05e4fd08938b9e593b6ebed165bda6ad9292b230984f10952cf82f0a0ca07bbeaa08172
+  languageName: node
+  linkType: hard
+
+"typescript@npm:4.7.4":
+  version: 4.7.4
+  resolution: "typescript@npm:4.7.4"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 5750181b1cd7e6482c4195825547e70f944114fb47e58e4aa7553e62f11b3f3173766aef9c281783edfd881f7b8299cf35e3ca8caebe73d8464528c907a164df
   languageName: node
   linkType: hard
 
@@ -32939,13 +32956,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@4 - 5#~builtin<compat/typescript>, typescript@patch:typescript@5.0.4#~builtin<compat/typescript>":
+"typescript@patch:typescript@4 - 5#~builtin<compat/typescript>":
   version: 5.0.4
   resolution: "typescript@patch:typescript@npm%3A5.0.4#~builtin<compat/typescript>::version=5.0.4&hash=ad5954"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 6a1fe9a77bb9c5176ead919cc4a1499ee63e46b4e05bf667079f11bf3a8f7887f135aa72460a4c3b016e6e6bb65a822cb8689a6d86cbfe92d22cc9f501f09213
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@4.7.4#~builtin<compat/typescript>":
+  version: 4.7.4
+  resolution: "typescript@patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=65a307"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 9096d8f6c16cb80ef3bf96fcbbd055bf1c4a43bd14f3b7be45a9fbe7ada46ec977f604d5feed3263b4f2aa7d4c7477ce5f9cd87de0d6feedec69a983f3a4f93e
   languageName: node
   linkType: hard
 
