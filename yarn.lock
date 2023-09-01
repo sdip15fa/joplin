@@ -4478,7 +4478,7 @@ __metadata:
     node-notifier: 10.0.1
     node-rsa: 1.1.1
     pretty-bytes: 5.6.0
-    re-resizable: 6.9.9
+    re-resizable: 6.9.11
     react: 18.2.0
     react-datetime: 3.2.0
     react-dom: 18.2.0
@@ -4556,7 +4556,7 @@ __metadata:
     buffer: 6.0.3
     constants-browserify: 1.0.0
     crypto-browserify: 3.12.0
-    deprecated-react-native-prop-types: 4.0.0
+    deprecated-react-native-prop-types: 4.2.1
     events: 3.3.0
     execa: 4.1.0
     fs-extra: 11.1.1
@@ -4965,7 +4965,7 @@ __metadata:
     dayjs: 1.11.9
     execa: 4.1.0
     fs-extra: 11.1.1
-    gettext-extractor: 3.7.2
+    gettext-extractor: 3.8.0
     gettext-parser: 7.0.1
     glob: 10.3.3
     gulp: 4.0.2
@@ -4979,7 +4979,7 @@ __metadata:
     relative: 3.0.2
     request: 2.88.2
     rss: 1.2.2
-    sass: 1.63.6
+    sass: 1.64.2
     sharp: 0.32.4
     source-map-support: 0.5.21
     sqlite3: 5.1.6
@@ -14169,14 +14169,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"deprecated-react-native-prop-types@npm:4.0.0":
-  version: 4.0.0
-  resolution: "deprecated-react-native-prop-types@npm:4.0.0"
+"deprecated-react-native-prop-types@npm:4.2.1":
+  version: 4.2.1
+  resolution: "deprecated-react-native-prop-types@npm:4.2.1"
   dependencies:
     "@react-native/normalize-colors": "*"
     invariant: "*"
     prop-types: "*"
-  checksum: 3542c70d0379153c946bc2e23202405df4337be3dc2a96601b6696247097e13405091efa7640841f8c920d3239145d8c024e13758c65a884a207b88ec2c826aa
+  checksum: fcbe632e4edc367df7997b63fc6fea8e7f4b222b47ec6b016d1da5869f19710280630cbdff5fec1a4c729c629c35f0d03828f06f7d3db4b00bb415fbd63650f0
   languageName: node
   linkType: hard
 
@@ -17646,9 +17646,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gettext-extractor@npm:3.7.2":
-  version: 3.7.2
-  resolution: "gettext-extractor@npm:3.7.2"
+"gettext-extractor@npm:3.8.0":
+  version: 3.8.0
+  resolution: "gettext-extractor@npm:3.8.0"
   dependencies:
     "@types/glob": 5 - 7
     "@types/parse5": ^5
@@ -17657,7 +17657,7 @@ __metadata:
     parse5: 5 - 6
     pofile: 1.0.x
     typescript: 4 - 5
-  checksum: e402b17b1f07b79469528a60dd6379287337a49cada6804fc02843b3cda06c5e591192c1ed58bbe98bc558f4d37a604d34713056321e80cc2fed949895b907c6
+  checksum: 61c5b3e9c50bfc8f962d2b776b0a47c6ff7b62d9b0893666cf4df8371f2d58389870f110c76cb6154022c716e3e7bd03a82824c5e4cf1a50a38d5effaa5475b8
   languageName: node
   linkType: hard
 
@@ -27669,13 +27669,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"re-resizable@npm:6.9.9":
-  version: 6.9.9
-  resolution: "re-resizable@npm:6.9.9"
+"re-resizable@npm:6.9.11":
+  version: 6.9.11
+  resolution: "re-resizable@npm:6.9.11"
   peerDependencies:
     react: ^16.13.1 || ^17.0.0 || ^18.0.0
     react-dom: ^16.13.1 || ^17.0.0 || ^18.0.0
-  checksum: a2c8bfe86646fb02d5c9c624b1da26f9e6a5e2f552cd96ce4db690588bee6b21177065ce8e98646c6ca0b1a9c4ce233824b75eb346800d8248ac8a87b40f1b28
+  checksum: 04be62e2985caff8ff082664b9b66d7c49df383a9560e691f32f583cba75ce51077be8b718c5cda5a1fa07e701337102cbd9ff5b03a58541d9092f25753f47f7
   languageName: node
   linkType: hard
 
@@ -29715,16 +29715,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:1.63.6":
-  version: 1.63.6
-  resolution: "sass@npm:1.63.6"
+"sass@npm:1.64.2":
+  version: 1.64.2
+  resolution: "sass@npm:1.64.2"
   dependencies:
     chokidar: ">=3.0.0 <4.0.0"
     immutable: ^4.0.0
     source-map-js: ">=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: 3372319904658eeafaf78a09a6fcb3368a68e6d76fe3c43c2d009f4f72e475ab22b82ef483ef5c00fcda3ab00066846c0bd88c36b42771b855f6ab80c7eda541
+  checksum: 43a5c9b9b3b6ba27feb5c45eba90edc437b15a30fd443f5d2623bbd59fe4a922f2a6a9990296c6a6c2b5bce7f401922c5049357415f50b745952c2d478bc5526
   languageName: node
   linkType: hard
 

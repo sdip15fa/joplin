@@ -369,6 +369,7 @@ packages/app-desktop/services/plugins/hooks/useContentSize.js
 packages/app-desktop/services/plugins/hooks/useHtmlLoader.js
 packages/app-desktop/services/plugins/hooks/useScriptLoader.js
 packages/app-desktop/services/plugins/hooks/useSubmitHandler.js
+packages/app-desktop/services/plugins/hooks/useThemeCss.test.js
 packages/app-desktop/services/plugins/hooks/useThemeCss.js
 packages/app-desktop/services/plugins/hooks/useViewIsReady.js
 packages/app-desktop/services/plugins/hooks/useWebviewToPluginMessages.js
@@ -389,6 +390,7 @@ packages/app-mobile/components/ActionButton.js
 packages/app-mobile/components/BackButtonDialogBox.js
 packages/app-mobile/components/CameraView.js
 packages/app-mobile/components/CustomButton.js
+packages/app-mobile/components/Dropdown.test.js
 packages/app-mobile/components/Dropdown.js
 packages/app-mobile/components/ExtendedWebView.js
 packages/app-mobile/components/FolderPicker.js
@@ -538,7 +540,6 @@ packages/lib/database-driver-better-sqlite.js
 packages/lib/database.js
 packages/lib/debug/DebugService.js
 packages/lib/dom.js
-packages/lib/dummy.test.js
 packages/lib/errorUtils.js
 packages/lib/errors.js
 packages/lib/eventManager.js
