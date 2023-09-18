@@ -20,6 +20,7 @@ import NoteListWrapper from '../NoteListWrapper/NoteListWrapper';
 import { AppState } from '../../app.reducer';
 import { saveLayout, loadLayout } from '../ResizableLayout/utils/persist';
 import Setting from '@joplin/lib/models/Setting';
+import shouldShowMissingPasswordWarning from '@joplin/lib/components/shared/config/shouldShowMissingPasswordWarning';
 import produce from 'immer';
 import shim from '@joplin/lib/shim';
 import bridge from '../../services/bridge';
@@ -57,6 +58,7 @@ interface Props {
 	pluginHtmlContents: PluginHtmlContents;
 	pluginsLoaded: boolean;
 	hasNotesBeingSaved: boolean;
+	// eslint-disable-next-line @typescript-eslint/ban-types -- Old code before rule was applied
 	dispatch: Function;
 	mainLayout: LayoutItem;
 	style: any;
@@ -66,6 +68,7 @@ interface Props {
 	shouldUpgradeSyncTarget: boolean;
 	hasDisabledSyncItems: boolean;
 	hasDisabledEncryptionItems: boolean;
+	hasMissingSyncCredentials: boolean;
 	showMissingMasterKeyMessage: boolean;
 	showNeedUpgradingMasterKeyMessage: boolean;
 	showShouldReencryptMessage: boolean;
@@ -121,6 +124,7 @@ class MainScreenComponent extends React.Component<Props, State> {
 	private isPrinting_: boolean;
 	private styleKey_: string;
 	private styles_: any;
+	// eslint-disable-next-line @typescript-eslint/ban-types -- Old code before rule was applied
 	private promptOnClose_: Function;
 
 	public constructor(props: Props) {
@@ -514,6 +518,7 @@ class MainScreenComponent extends React.Component<Props, State> {
 		return this.styles_;
 	}
 
+	// eslint-disable-next-line @typescript-eslint/ban-types -- Old code before rule was applied
 	private renderNotificationMessage(message: string, callForAction: string, callForActionHandler: Function, callForAction2: string = null, callForActionHandler2: Function = null) {
 		const theme = themeStyle(this.props.themeId);
 		const urlStyle: any = { color: theme.colorWarnUrl, textDecoration: 'underline' };
@@ -558,6 +563,16 @@ class MainScreenComponent extends React.Component<Props, State> {
 			});
 		};
 
+		const onViewSyncSettingsScreen = () => {
+			this.props.dispatch({
+				type: 'NAV_GO',
+				routeName: 'Config',
+				props: {
+					defaultSection: 'sync',
+				},
+			});
+		};
+
 		const onViewPluginScreen = () => {
 			this.props.dispatch({
 				type: 'NAV_GO',
@@ -593,31 +608,37 @@ class MainScreenComponent extends React.Component<Props, State> {
 			msg = this.renderNotificationMessage(
 				_('Safe mode is currently active. Note rendering and all plugins are temporarily disabled.'),
 				_('Disable safe mode and restart'),
-				onDisableSafeModeAndRestart
+				onDisableSafeModeAndRestart,
+			);
+		} else if (this.props.hasMissingSyncCredentials) {
+			msg = this.renderNotificationMessage(
+				_('The synchronisation password is missing.'),
+				_('Set the password'),
+				onViewSyncSettingsScreen,
 			);
 		} else if (this.props.shouldUpgradeSyncTarget) {
 			msg = this.renderNotificationMessage(
 				_('The sync target needs to be upgraded before Joplin can sync. The operation may take a few minutes to complete and the app needs to be restarted. To proceed please click on the link.'),
 				_('Restart and upgrade'),
-				onRestartAndUpgrade
+				onRestartAndUpgrade,
 			);
 		} else if (this.props.hasDisabledEncryptionItems) {
 			msg = this.renderNotificationMessage(
 				_('Some items cannot be decrypted.'),
 				_('View them now'),
-				onViewStatusScreen
+				onViewStatusScreen,
 			);
 		} else if (this.props.showNeedUpgradingMasterKeyMessage) {
 			msg = this.renderNotificationMessage(
 				_('One of your master keys use an obsolete encryption method.'),
 				_('View them now'),
-				onViewEncryptionConfigScreen
+				onViewEncryptionConfigScreen,
 			);
 		} else if (this.props.showShouldReencryptMessage) {
 			msg = this.renderNotificationMessage(
 				_('The default encryption method has been changed, you should re-encrypt your data.'),
 				_('More info'),
-				onViewEncryptionConfigScreen
+				onViewEncryptionConfigScreen,
 			);
 		} else if (this.showShareInvitationNotification(this.props)) {
 			const invitation = this.props.shareInvitations.find(inv => inv.status === 0);
@@ -628,25 +649,25 @@ class MainScreenComponent extends React.Component<Props, State> {
 				_('Accept'),
 				() => onInvitationRespond(invitation.id, invitation.share.folder_id, invitation.master_key, true),
 				_('Reject'),
-				() => onInvitationRespond(invitation.id, invitation.share.folder_id, invitation.master_key, false)
+				() => onInvitationRespond(invitation.id, invitation.share.folder_id, invitation.master_key, false),
 			);
 		} else if (this.props.hasDisabledSyncItems) {
 			msg = this.renderNotificationMessage(
 				_('Some items cannot be synchronised.'),
 				_('View them now'),
-				onViewStatusScreen
+				onViewStatusScreen,
 			);
 		} else if (this.props.showMissingMasterKeyMessage) {
 			msg = this.renderNotificationMessage(
 				_('One or more master keys need a password.'),
 				_('Set the password'),
-				onViewEncryptionConfigScreen
+				onViewEncryptionConfigScreen,
 			);
 		} else if (this.props.showInstallTemplatesPlugin) {
 			msg = this.renderNotificationMessage(
 				'The template feature has been moved to a plugin called "Templates".',
 				'Install plugin',
-				onViewPluginScreen
+				onViewPluginScreen,
 			);
 		}
 
@@ -659,7 +680,7 @@ class MainScreenComponent extends React.Component<Props, State> {
 
 	public messageBoxVisible(props: Props = null) {
 		if (!props) props = this.props;
-		return props.hasDisabledSyncItems || props.showMissingMasterKeyMessage || props.showNeedUpgradingMasterKeyMessage || props.showShouldReencryptMessage || props.hasDisabledEncryptionItems || this.props.shouldUpgradeSyncTarget || props.isSafeMode || this.showShareInvitationNotification(props) || this.props.needApiAuth || this.props.showInstallTemplatesPlugin;
+		return props.hasDisabledSyncItems || props.showMissingMasterKeyMessage || props.hasMissingSyncCredentials || props.showNeedUpgradingMasterKeyMessage || props.showShouldReencryptMessage || props.hasDisabledEncryptionItems || this.props.shouldUpgradeSyncTarget || props.isSafeMode || this.showShareInvitationNotification(props) || this.props.needApiAuth || this.props.showInstallTemplatesPlugin;
 	}
 
 	public registerCommands() {
@@ -846,9 +867,7 @@ class MainScreenComponent extends React.Component<Props, State> {
 				{this.renderPluginDialogs()}
 				{noteContentPropertiesDialogOptions.visible && <NoteContentPropertiesDialog markupLanguage={noteContentPropertiesDialogOptions.markupLanguage} themeId={this.props.themeId} onClose={this.noteContentPropertiesDialog_close} text={noteContentPropertiesDialogOptions.text}/>}
 				{notePropertiesDialogOptions.visible && <NotePropertiesDialog themeId={this.props.themeId} noteId={notePropertiesDialogOptions.noteId} onClose={this.notePropertiesDialog_close} onRevisionLinkClick={notePropertiesDialogOptions.onRevisionLinkClick} />}
-				{/* @ts-ignore */}
 				{shareNoteDialogOptions.visible && <ShareNoteDialog themeId={this.props.themeId} noteIds={shareNoteDialogOptions.noteIds} onClose={this.shareNoteDialog_close} />}
-				{/* @ts-ignore */}
 				{shareFolderDialogOptions.visible && <ShareFolderDialog themeId={this.props.themeId} folderId={shareFolderDialogOptions.folderId} onClose={this.shareFolderDialog_close} />}
 
 				<PromptDialog autocomplete={promptOptions && 'autocomplete' in promptOptions ? promptOptions.autocomplete : null} defaultValue={promptOptions && promptOptions.value ? promptOptions.value : ''} themeId={this.props.themeId} style={styles.prompt} onClose={this.promptOnClose_} label={promptOptions ? promptOptions.label : ''} description={promptOptions ? promptOptions.description : null} visible={!!this.state.promptOptions} buttons={promptOptions && 'buttons' in promptOptions ? promptOptions.buttons : null} inputType={promptOptions && 'inputType' in promptOptions ? promptOptions.inputType : null} />
@@ -874,6 +893,7 @@ const mapStateToProps = (state: AppState) => {
 		showNeedUpgradingMasterKeyMessage: showNeedUpgradingEnabledMasterKeyMessage,
 		showShouldReencryptMessage: state.settings['encryption.shouldReencrypt'] >= Setting.SHOULD_REENCRYPT_YES,
 		shouldUpgradeSyncTarget: state.settings['sync.upgradeState'] === Setting.SYNC_UPGRADE_STATE_SHOULD_DO,
+		hasMissingSyncCredentials: shouldShowMissingPasswordWarning(state.settings['sync.target'], state.settings),
 		pluginsLegacy: state.pluginsLegacy,
 		plugins: state.pluginService.plugins,
 		pluginHtmlContents: state.pluginService.pluginHtmlContents,

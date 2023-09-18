@@ -51,7 +51,7 @@ interface CodeMirrorResult extends CodeMirrorControl {
 }
 
 export function initCodeMirror(
-	parentElement: any, initialText: string, settings: EditorSettings
+	parentElement: any, initialText: string, settings: EditorSettings,
 ): CodeMirrorResult {
 	logMessage('Initializing CodeMirror...');
 	const theme = settings.themeData;
@@ -59,7 +59,7 @@ export function initCodeMirror(
 	let searchVisible = false;
 
 	let schedulePostUndoRedoDepthChangeId_: any = 0;
-	const schedulePostUndoRedoDepthChange = (editor: EditorView, doItNow: boolean = false) => {
+	const schedulePostUndoRedoDepthChange = (editor: EditorView, doItNow = false) => {
 		if (schedulePostUndoRedoDepthChangeId_) {
 			if (doItNow) {
 				clearTimeout(schedulePostUndoRedoDepthChangeId_);
@@ -342,6 +342,8 @@ export function initCodeMirror(
 
 					...defaultKeymap, ...historyKeymap, indentWithTab, ...searchKeymap,
 				]),
+
+				EditorState.readOnly.of(settings.readOnly),
 			],
 			doc: initialText,
 		}),

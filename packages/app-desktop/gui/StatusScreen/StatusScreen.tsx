@@ -15,6 +15,7 @@ import styled from 'styled-components';
 interface Props {
 	themeId: string;
 	style: any;
+	// eslint-disable-next-line @typescript-eslint/ban-types -- Old code before rule was applied
 	dispatch: Function;
 }
 
@@ -132,14 +133,14 @@ function StatusScreen(props: Props) {
 					<li style={theme.textStyle} key={`item_${n}`}>
 						<span>{text}</span>
 						{retryLink}
-					</li>
+					</li>,
 				);
 			} else {
 				itemsHtml.push(
 					<div style={theme.textStyle} key={`item_${n}`}>
 						<span>{text}</span>
 						{retryLink}
-					</div>
+					</div>,
 				);
 			}
 		}

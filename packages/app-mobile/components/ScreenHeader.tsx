@@ -7,7 +7,7 @@ const Icon = require('react-native-vector-icons/Ionicons').default;
 const { BackButtonService } = require('../services/back-button.js');
 import NavService from '@joplin/lib/services/NavService';
 import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
-import { _ } from '@joplin/lib/locale';
+import { _, _n } from '@joplin/lib/locale';
 import Setting from '@joplin/lib/models/Setting';
 import Note from '@joplin/lib/models/Note';
 import Folder from '@joplin/lib/models/Folder';
@@ -40,10 +40,11 @@ interface NavButtonPressEvent {
 	screen: string;
 }
 
-interface MenuOptionType {
+export interface MenuOptionType {
 	onPress: OnPressCallback;
 	isDivider?: boolean;
 	title: string;
+	disabled?: boolean;
 }
 
 type DispatchCommandType=(event: { type: string })=> void;
@@ -81,9 +82,11 @@ interface ScreenHeaderProps {
 	historyCanGoBack?: boolean;
 	showMissingMasterKeyMessage?: boolean;
 	hasDisabledSyncItems?: boolean;
+	hasDisabledEncryptionItems?: boolean;
 	shouldUpgradeSyncTarget?: boolean;
 	showShouldUpgradeSyncTargetMessage?: boolean;
 
+	themeId: number;
 }
 
 interface ScreenHeaderState {
@@ -98,7 +101,7 @@ class ScreenHeaderComponent extends PureComponent<ScreenHeaderProps, ScreenHeade
 	}
 
 	private styles() {
-		const themeId = Setting.value('theme');
+		const themeId = this.props.themeId;
 		if (this.cachedStyles[themeId]) return this.cachedStyles[themeId];
 		this.cachedStyles = {};
 
@@ -201,6 +204,11 @@ class ScreenHeaderComponent extends PureComponent<ScreenHeaderProps, ScreenHeade
 			},
 		};
 
+		styleObject.contextMenuItemTextDisabled = {
+			...styleObject.contextMenuItemText,
+			opacity: 0.5,
+		};
+
 		styleObject.topIcon = { ...theme.icon };
 		styleObject.topIcon.flex = 1;
 		styleObject.topIcon.textAlignVertical = 'center';
@@ -240,11 +248,15 @@ class ScreenHeaderComponent extends PureComponent<ScreenHeaderProps, ScreenHeade
 	private async duplicateButton_press() {
 		const noteIds = this.props.selectedNoteIds;
 
-		// Duplicate all selected notes. ensureUniqueTitle is set to true to use the
-		// original note's name as a root for the new unique identifier.
-		await Note.duplicateMultipleNotes(noteIds, { ensureUniqueTitle: true });
-
 		this.props.dispatch({ type: 'NOTE_SELECTION_END' });
+
+		try {
+			// Duplicate all selected notes. ensureUniqueTitle is set to true to use the
+			// original note's name as a root for the new unique identifier.
+			await Note.duplicateMultipleNotes(noteIds, { ensureUniqueTitle: true });
+		} catch (error) {
+			alert(_n('This note could not be duplicated: %s', 'These notes could not be duplicated: %s', noteIds.length, error.message));
+		}
 	}
 
 	private async deleteButton_press() {
@@ -259,7 +271,12 @@ class ScreenHeaderComponent extends PureComponent<ScreenHeaderProps, ScreenHeade
 		if (!ok) return;
 
 		this.props.dispatch({ type: 'NOTE_SELECTION_END' });
-		await Note.batchDelete(noteIds);
+
+		try {
+			await Note.batchDelete(noteIds);
+		} catch (error) {
+			alert(_n('This note could not be deleted: %s', 'These notes could not be deleted: %s', noteIds.length, error.message));
+		}
 	}
 
 	private menu_select(value: OnSelectCallbackType) {
@@ -281,7 +298,7 @@ class ScreenHeaderComponent extends PureComponent<ScreenHeaderProps, ScreenHeade
 	}
 
 	public render() {
-		const themeId = Setting.value('theme');
+		const themeId = this.props.themeId;
 		function sideMenuButton(styles: any, onPress: OnPressCallback) {
 			return (
 				<TouchableOpacity
@@ -316,7 +333,7 @@ class ScreenHeaderComponent extends PureComponent<ScreenHeaderProps, ScreenHeade
 		}
 
 		function saveButton(
-			styles: any, onPress: OnPressCallback, disabled: boolean, show: boolean
+			styles: any, onPress: OnPressCallback, disabled: boolean, show: boolean,
 		) {
 			if (!show) return null;
 
@@ -470,9 +487,9 @@ class ScreenHeaderComponent extends PureComponent<ScreenHeaderProps, ScreenHeade
 					menuOptionComponents.push(<View key={`menuOption_${key++}`} style={this.styles().divider} />);
 				} else {
 					menuOptionComponents.push(
-						<MenuOption value={o.onPress} key={`menuOption_${key++}`} style={this.styles().contextMenuItem}>
-							<Text style={this.styles().contextMenuItemText}>{o.title}</Text>
-						</MenuOption>
+						<MenuOption value={o.onPress} key={`menuOption_${key++}`} style={this.styles().contextMenuItem} disabled={!!o.disabled}>
+							<Text style={o.disabled ? this.styles().contextMenuItemTextDisabled : this.styles().contextMenuItemText}>{o.title}</Text>
+						</MenuOption>,
 					);
 				}
 			}
@@ -484,13 +501,13 @@ class ScreenHeaderComponent extends PureComponent<ScreenHeaderProps, ScreenHeade
 			menuOptionComponents.push(
 				<MenuOption value={() => this.deleteButton_press()} key={'menuOption_delete'} style={this.styles().contextMenuItem}>
 					<Text style={this.styles().contextMenuItemText}>{_('Delete')}</Text>
-				</MenuOption>
+				</MenuOption>,
 			);
 
 			menuOptionComponents.push(
 				<MenuOption value={() => this.duplicateButton_press()} key={'menuOption_duplicate'} style={this.styles().contextMenuItem}>
 					<Text style={this.styles().contextMenuItemText}>{_('Duplicate')}</Text>
-				</MenuOption>
+				</MenuOption>,
 			);
 		}
 
@@ -523,8 +540,13 @@ class ScreenHeaderComponent extends PureComponent<ScreenHeaderProps, ScreenHeade
 							if (!ok) return;
 
 							this.props.dispatch({ type: 'NOTE_SELECTION_END' });
-							for (let i = 0; i < noteIds.length; i++) {
-								await Note.moveToFolder(noteIds[i], folderId);
+
+							try {
+								for (let i = 0; i < noteIds.length; i++) {
+									await Note.moveToFolder(noteIds[i], folderId);
+								}
+							} catch (error) {
+								alert(_n('This note could not be moved: %s', 'These notes could not be moved: %s', noteIds.length, error.message));
 							}
 						}}
 						mustSelect={!!folderPickerOptions.mustSelect}
@@ -542,6 +564,10 @@ class ScreenHeaderComponent extends PureComponent<ScreenHeaderProps, ScreenHeade
 		if (this.props.showMissingMasterKeyMessage) warningComps.push(this.renderWarningBox('EncryptionConfig', _('Press to set the decryption password.')));
 		if (this.props.hasDisabledSyncItems) warningComps.push(this.renderWarningBox('Status', _('Some items cannot be synchronised. Press for more info.')));
 		if (this.props.shouldUpgradeSyncTarget && this.props.showShouldUpgradeSyncTargetMessage !== false) warningComps.push(this.renderWarningBox('UpgradeSyncTarget', _('The sync target needs to be upgraded. Press this banner to proceed.')));
+
+		if (this.props.hasDisabledEncryptionItems) {
+			warningComps.push(this.renderWarningBox('Status', _('Some items cannot be decrypted.')));
+		}
 
 		const showSideMenuButton = !!this.props.showSideMenuButton && !this.props.noteSelectionEnabled;
 		const showSelectAllButton = this.props.noteSelectionEnabled;
@@ -575,7 +601,9 @@ class ScreenHeaderComponent extends PureComponent<ScreenHeaderProps, ScreenHeade
 			!menuOptionComponents.length || !showContextMenuButton ? null : (
 				<Menu onSelect={value => this.menu_select(value)} style={this.styles().contextMenu}>
 					<MenuTrigger style={contextMenuStyle}>
-						<Icon name="md-ellipsis-vertical" style={this.styles().contextMenuTrigger} />
+						<View accessibilityLabel={_('Actions')}>
+							<Icon name="md-ellipsis-vertical" style={this.styles().contextMenuTrigger} />
+						</View>
 					</MenuTrigger>
 					<MenuOptions>
 						<ScrollView style={{ maxHeight: windowHeight }}>{menuOptionComponents}</ScrollView>
@@ -596,7 +624,7 @@ class ScreenHeaderComponent extends PureComponent<ScreenHeaderProps, ScreenHeade
 							if (this.props.onSaveButtonPress) this.props.onSaveButtonPress();
 						},
 						this.props.saveButtonDisabled === true,
-						this.props.showSaveButton === true
+						this.props.showSaveButton === true,
 					)}
 					{titleComp}
 					{selectAllButtonComp}
@@ -629,6 +657,7 @@ const ScreenHeader = connect((state: State) => {
 		locale: state.settings.locale,
 		folders: state.folders,
 		themeId: state.settings.theme,
+		hasDisabledEncryptionItems: state.hasDisabledEncryptionItems,
 		noteSelectionEnabled: state.noteSelectionEnabled,
 		selectedNoteIds: state.selectedNoteIds,
 		showMissingMasterKeyMessage: showMissingMasterKeyMessage(syncInfo, state.notLoadedMasterKeys),

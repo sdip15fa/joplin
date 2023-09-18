@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import { EditorSelection } from '@codemirror/state';
 import {
 	toggleBolded, toggleCode, toggleHeaderLevel, toggleItalicized, toggleMath, updateLink,
@@ -10,10 +6,13 @@ import createEditor from './testUtil/createEditor';
 import { blockMathTagName } from './markdownMathParser';
 
 describe('markdownCommands', () => {
+
+	jest.retryTimes(2);
+
 	it('should bold/italicize everything selected', async () => {
 		const initialDocText = 'Testing...';
 		const editor = await createEditor(
-			initialDocText, EditorSelection.range(0, initialDocText.length), []
+			initialDocText, EditorSelection.range(0, initialDocText.length), [],
 		);
 
 		toggleBolded(editor);
@@ -40,7 +39,7 @@ describe('markdownCommands', () => {
 	it('for a cursor, bolding, then italicizing, should produce a bold-italic region', async () => {
 		const initialDocText = '';
 		const editor = await createEditor(
-			initialDocText, EditorSelection.cursor(0), []
+			initialDocText, EditorSelection.cursor(0), [],
 		);
 
 		toggleBolded(editor);
@@ -114,14 +113,14 @@ describe('markdownCommands', () => {
 		const editor = await createEditor(
 			initialDocText,
 			EditorSelection.cursor('Testing...\n\n> This'.length),
-			['Blockquote']
+			['Blockquote'],
 		);
 
 		toggleHeaderLevel(1)(editor);
 
 		const mainSel = editor.state.selection.main;
 		expect(editor.state.doc.toString()).toBe(
-			'Testing...\n\n> # This is a test.\n> ...a test'
+			'Testing...\n\n> # This is a test.\n> ...a test',
 		);
 		expect(mainSel.empty).toBe(true);
 		expect(mainSel.from).toBe('Testing...\n\n> # This is a test.'.length);
@@ -129,7 +128,7 @@ describe('markdownCommands', () => {
 		toggleHeaderLevel(3)(editor);
 
 		expect(editor.state.doc.toString()).toBe(
-			'Testing...\n\n> ### This is a test.\n> ...a test'
+			'Testing...\n\n> ### This is a test.\n> ...a test',
 		);
 	});
 
@@ -139,9 +138,9 @@ describe('markdownCommands', () => {
 			initialDocText,
 			EditorSelection.range(
 				'Testing...\n\n> This'.length,
-				'Testing...\n\n> This is a test.\n> y = mx + b'.length
+				'Testing...\n\n> This is a test.\n> y = mx + b'.length,
 			),
-			['Blockquote']
+			['Blockquote'],
 		);
 
 		toggleMath(editor);
@@ -149,7 +148,7 @@ describe('markdownCommands', () => {
 		// Toggling math should surround the content in '$$'s
 		const mainSel = editor.state.selection.main;
 		expect(editor.state.doc.toString()).toEqual(
-			'Testing...\n\n> $$\n> This is a test.\n> y = mx + b\n> $$\n> ...a test'
+			'Testing...\n\n> $$\n> This is a test.\n> y = mx + b\n> $$\n> ...a test',
 		);
 		expect(mainSel.from).toBe('Testing...\n\n'.length);
 		expect(mainSel.to).toBe('Testing...\n\n> $$\n> This is a test.\n> y = mx + b\n> $$'.length);
@@ -161,7 +160,7 @@ describe('markdownCommands', () => {
 		const editor = await createEditor(
 			initialDocText,
 			EditorSelection.cursor('Testing...\n\n> $$\n> This is'.length),
-			['Blockquote', blockMathTagName]
+			['Blockquote', blockMathTagName],
 		);
 
 		// Toggling math should remove the '$$'s
@@ -178,12 +177,12 @@ describe('markdownCommands', () => {
 
 		updateLink('bar', 'https://example.com/')(editor);
 		expect(editor.state.doc.toString()).toBe(
-			'[bar](https://example.com/)'
+			'[bar](https://example.com/)',
 		);
 
 		updateLink('', 'https://example.com/')(editor);
 		expect(editor.state.doc.toString()).toBe(
-			'https://example.com/'
+			'https://example.com/',
 		);
 	});
 
@@ -229,7 +228,7 @@ describe('markdownCommands', () => {
 		toggleMath(editor);
 		editor.dispatch(editor.state.replaceSelection('f(x) = ...'));
 		expect(editor.state.doc.toString()).toBe(
-			'> Testing...> \n> \n> $$\n> f(x) = ...\n> $$'
+			'> Testing...> \n> \n> $$\n> f(x) = ...\n> $$',
 		);
 
 		// If we toggle math again, everything from the start of the line with the first

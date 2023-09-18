@@ -9,7 +9,7 @@ import { PluginStates, utils as pluginUtils } from '@joplin/lib/services/plugins
 import shim from '@joplin/lib/shim';
 import Setting from '@joplin/lib/models/Setting';
 import versionInfo from '@joplin/lib/versionInfo';
-import { Module } from '@joplin/lib/services/interop/types';
+import { ImportModule } from '@joplin/lib/services/interop/Module';
 import InteropServiceHelper from '../InteropServiceHelper';
 import { _ } from '@joplin/lib/locale';
 import { isContextMenuItemLocation, MenuItem, MenuItemLocation } from '@joplin/lib/services/plugins/api/types';
@@ -54,6 +54,7 @@ function getPluginCommandNames(plugins: PluginStates): string[] {
 	return output;
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-types -- Old code before rule was applied
 function createPluginMenuTree(label: string, menuItems: MenuItem[], onMenuItemClick: Function) {
 	const output: any = {
 		label: label,
@@ -108,6 +109,7 @@ const useSwitchProfileMenuItems = (profileConfig: ProfileConfig, menuItemDic: an
 };
 
 interface Props {
+	// eslint-disable-next-line @typescript-eslint/ban-types -- Old code before rule was applied
 	dispatch: Function;
 	menuItemProps: any;
 	routeName: string;
@@ -228,7 +230,7 @@ function useMenu(props: Props) {
 		void CommandService.instance().execute(commandName);
 	}, []);
 
-	const onImportModuleClick = useCallback(async (module: Module, moduleSource: string) => {
+	const onImportModuleClick = useCallback(async (module: ImportModule, moduleSource: string) => {
 		let path = null;
 
 		if (moduleSource === 'file') {
@@ -299,7 +301,7 @@ function useMenu(props: Props) {
 		return menuUtils.commandsToMenuItems(
 			commandNames.concat(pluginCommandNames),
 			(commandName: string) => onMenuItemClickRef.current(commandName),
-			props.locale
+			props.locale,
 		);
 		// eslint-disable-next-line @seiyab/react-hooks/exhaustive-deps -- Old code before rule was applied
 	}, [commandNames, pluginCommandNames, props.locale]);
@@ -345,7 +347,7 @@ function useMenu(props: Props) {
 				if (type === 'notes') {
 					sortItems.push(
 						{ ...menuItemDic.toggleNotesSortOrderReverse, type: 'checkbox' },
-						{ ...menuItemDic.toggleNotesSortOrderField, visible: false }
+						{ ...menuItemDic.toggleNotesSortOrderField, visible: false },
 					);
 				} else {
 					sortItems.push({
@@ -389,7 +391,7 @@ function useMenu(props: Props) {
 									{
 										plugins: pluginsRef.current,
 										customCss: props.customCss,
-									}
+									},
 								);
 							},
 						});
@@ -401,6 +403,7 @@ function useMenu(props: Props) {
 							label: module.fullLabel(moduleSource),
 							click: () => onImportModuleClickRef.current(module, moduleSource),
 						});
+						if (module.separatorAfter) importItems.push({ type: 'separator' });
 					}
 				}
 			}
@@ -412,7 +415,7 @@ function useMenu(props: Props) {
 			});
 
 			exportItems.push(
-				menuItemDic.exportPdf
+				menuItemDic.exportPdf,
 			);
 
 			// We need a dummy entry, otherwise the ternary operator to show a

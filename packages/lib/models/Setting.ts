@@ -6,7 +6,7 @@ import Database from '../database';
 import SyncTargetRegistry from '../SyncTargetRegistry';
 import time from '../time';
 import FileHandler, { SettingValues } from './settings/FileHandler';
-import Logger from '../Logger';
+import Logger from '@joplin/utils/Logger';
 import mergeGlobalAndLocalSettings from '../services/profileConfig/mergeGlobalAndLocalSettings';
 import splitGlobalAndLocalSettings from '../services/profileConfig/splitGlobalAndLocalSettings';
 import JoplinError from '../JoplinError';
@@ -57,6 +57,7 @@ export interface SettingItem {
 	isEnum?: boolean;
 	section?: string;
 	label?(): string;
+	// eslint-disable-next-line @typescript-eslint/ban-types -- Old code before rule was applied
 	description?: Function;
 	options?(): any;
 	optionsOrder?(): string[];
@@ -69,6 +70,7 @@ export interface SettingItem {
 	maximum?: number;
 	step?: number;
 	onClick?(): void;
+	// eslint-disable-next-line @typescript-eslint/ban-types -- Old code before rule was applied
 	unitLabel?: Function;
 	needRestart?: boolean;
 	autoSave?: boolean;
@@ -207,6 +209,7 @@ const defaultMigrations: DefaultMigration[] = [
 interface UserSettingMigration {
 	oldName: string;
 	newName: string;
+	// eslint-disable-next-line @typescript-eslint/ban-types -- Old code before rule was applied
 	transformValue: Function;
 }
 
@@ -312,7 +315,7 @@ class Setting extends BaseModel {
 	private static changedKeys_: string[] = [];
 	private static fileHandler_: FileHandler = null;
 	private static rootFileHandler_: FileHandler = null;
-	private static settingFilename_: string = 'settings.json';
+	private static settingFilename_ = 'settings.json';
 	private static buildInMetadata_: SettingItems = null;
 
 	public static tableName() {
@@ -714,6 +717,14 @@ class Setting extends BaseModel {
 				secure: true,
 			},
 
+			'sync.10.inboxEmail': { value: '', type: SettingItemType.String, public: false },
+
+			'sync.10.inboxId': { value: '', type: SettingItemType.String, public: false },
+
+			'sync.10.canUseSharePermissions': { value: false, type: SettingItemType.Bool, public: false },
+
+			'sync.10.accountType': { value: 0, type: SettingItemType.Int, public: false },
+
 			'sync.5.syncTargets': { value: {}, type: SettingItemType.Object, public: false },
 
 			'sync.resourceDownloadMode': {
@@ -837,7 +848,7 @@ class Setting extends BaseModel {
 				value: false,
 				type: SettingItemType.Bool,
 				section: 'appearance',
-				appTypes: [AppType.Desktop],
+				appTypes: [AppType.Mobile, AppType.Desktop],
 				public: true,
 				label: () => _('Automatically switch theme to match system theme'),
 				storage: SettingStorage.File,
@@ -851,7 +862,7 @@ class Setting extends BaseModel {
 				show: (settings) => {
 					return settings['themeAutoDetect'];
 				},
-				appTypes: [AppType.Desktop],
+				appTypes: [AppType.Mobile, AppType.Desktop],
 				isEnum: true,
 				label: () => _('Preferred light theme'),
 				section: 'appearance',
@@ -867,7 +878,7 @@ class Setting extends BaseModel {
 				show: (settings) => {
 					return settings['themeAutoDetect'];
 				},
-				appTypes: [AppType.Desktop],
+				appTypes: [AppType.Mobile, AppType.Desktop],
 				isEnum: true,
 				label: () => _('Preferred dark theme'),
 				section: 'appearance',
@@ -1112,7 +1123,25 @@ class Setting extends BaseModel {
 				storage: SettingStorage.File,
 				isGlobal: true,
 			},
-
+			imageResizing: {
+				value: 'alwaysAsk',
+				type: SettingItemType.String,
+				section: 'note',
+				isEnum: true,
+				public: true,
+				appTypes: [AppType.Mobile, AppType.Desktop],
+				label: () => _('Resize large images:'),
+				description: () => _('Shrink large images before adding them to notes to save storage space.'),
+				options: () => {
+					return {
+						alwaysAsk: _('Always ask'),
+						alwaysResize: _('Always resize'),
+						neverResize: _('Never resize'),
+					};
+				},
+				storage: SettingStorage.File,
+				isGlobal: true,
+			},
 			'plugins.states': {
 				value: '',
 				type: SettingItemType.Object,
@@ -1285,7 +1314,7 @@ class Setting extends BaseModel {
 				onClick: () => {
 					shim.openOrCreateFile(
 						this.customCssFilePath(Setting.customCssFilenames.RENDERED_MARKDOWN),
-						'/* For styling the rendered Markdown */'
+						'/* For styling the rendered Markdown */',
 					);
 				},
 				type: SettingItemType.Button,
@@ -1302,7 +1331,7 @@ class Setting extends BaseModel {
 				onClick: () => {
 					shim.openOrCreateFile(
 						this.customCssFilePath(Setting.customCssFilenames.JOPLIN_APP),
-						`/* For styling the entire Joplin app (except the rendered Markdown, which is defined in \`${Setting.customCssFilenames.RENDERED_MARKDOWN}\`) */`
+						`/* For styling the entire Joplin app (except the rendered Markdown, which is defined in \`${Setting.customCssFilenames.RENDERED_MARKDOWN}\`) */`,
 					);
 				},
 				type: SettingItemType.Button,
@@ -1696,6 +1725,21 @@ class Setting extends BaseModel {
 				public: false,
 			},
 
+			'sync.shareCache': {
+				value: null,
+				type: SettingItemType.String,
+				public: false,
+			},
+
+			'voiceTypingBaseUrl': {
+				value: '',
+				type: SettingItemType.String,
+				public: true,
+				appTypes: [AppType.Mobile],
+				description: () => _('Leave it blank to download the language files from the default website'),
+				label: () => _('Voice typing language files (URL)'),
+				section: 'note',
+			},
 		};
 
 		this.metadata_ = { ...this.buildInMetadata_ };
@@ -1752,6 +1796,7 @@ class Setting extends BaseModel {
 
 	public static applyUserSettingMigration() {
 		// Function to translate existing user settings to new setting.
+		// eslint-disable-next-line github/array-foreach -- Old code before rule was applied
 		userSettingMigration.forEach(userMigration => {
 			if (!this.isSet(userMigration.newName) && this.isSet(userMigration.oldName)) {
 				this.setValue(userMigration.newName, userMigration.transformValue(this.value(userMigration.oldName)));
@@ -1848,7 +1893,7 @@ class Setting extends BaseModel {
 		return this.metadata()[key] && this.metadata()[key].secure === true;
 	}
 
-	public static keys(publicOnly: boolean = false, appType: AppType = null, options: KeysOptions = null) {
+	public static keys(publicOnly = false, appType: AppType = null, options: KeysOptions = null) {
 		options = { secureOnly: false, ...options };
 
 		if (!this.keys_) {
@@ -2082,7 +2127,7 @@ class Setting extends BaseModel {
 	// If yes, then it just returns 'true'. If its not present then, it will
 	// update it and return 'false'
 	public static setArrayValue(settingName: string, value: string): boolean {
-		const settingValue: Array<any> = this.value(settingName);
+		const settingValue: any[] = this.value(settingName);
 		if (settingValue.includes(value)) return true;
 		settingValue.push(value);
 		this.setValue(settingName, settingValue);
@@ -2457,9 +2502,30 @@ class Setting extends BaseModel {
 		throw new Error(`Invalid type ID: ${typeId}`);
 	}
 
+	public static sectionOrder() {
+		return [
+			'general',
+			'application',
+			'appearance',
+			'sync',
+			'encryption',
+			'joplinCloud',
+			'plugins',
+			'markdownPlugins',
+			'note',
+			'revisionService',
+			'server',
+			'keymap',
+		];
+	}
+
 	private static sectionSource(sectionName: string): SettingSectionSource {
 		if (this.customSections_[sectionName]) return this.customSections_[sectionName].source || SettingSectionSource.Default;
 		return SettingSectionSource.Default;
+	}
+
+	public static isSubSection(sectionName: string) {
+		return ['encryption', 'application', 'appearance', 'joplinCloud'].includes(sectionName);
 	}
 
 	public static groupMetadatasBySections(metadatas: SettingItem[]) {
@@ -2509,6 +2575,7 @@ class Setting extends BaseModel {
 		if (name === 'encryption') return _('Encryption');
 		if (name === 'server') return _('Web Clipper');
 		if (name === 'keymap') return _('Keyboard Shortcuts');
+		if (name === 'joplinCloud') return _('Joplin Cloud');
 
 		if (this.customSections_[name] && this.customSections_[name].label) return this.customSections_[name].label;
 
@@ -2537,6 +2604,7 @@ class Setting extends BaseModel {
 		if (name === 'encryption') return 'icon-encryption';
 		if (name === 'server') return 'far fa-hand-scissors';
 		if (name === 'keymap') return 'fa fa-keyboard';
+		if (name === 'joplinCloud') return 'fa fa-cloud';
 
 		if (this.customSections_[name] && this.customSections_[name].iconName) return this.customSections_[name].iconName;
 

@@ -15,7 +15,7 @@ interface FolderPickerProps {
 	folders: FolderEntity[];
 	placeholder?: string;
 	darkText?: boolean;
-	themeId?: string;
+	themeId?: number;
 }
 
 
@@ -32,7 +32,7 @@ const FolderPicker: FunctionComponent<FolderPickerProps> = ({
 	const theme = themeStyle(themeId);
 
 	const addFolderChildren = (
-		folders: FolderEntityWithChildren[], pickerItems: DropdownListItem[], indent: number
+		folders: FolderEntityWithChildren[], pickerItems: DropdownListItem[], indent: number,
 	) => {
 		folders.sort((a, b) => {
 			const aTitle = a && a.title ? a.title : '';

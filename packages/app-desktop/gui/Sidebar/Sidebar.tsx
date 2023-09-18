@@ -19,7 +19,7 @@ import BaseModel from '@joplin/lib/BaseModel';
 import Folder from '@joplin/lib/models/Folder';
 import Note from '@joplin/lib/models/Note';
 import Tag from '@joplin/lib/models/Tag';
-import Logger from '@joplin/lib/Logger';
+import Logger from '@joplin/utils/Logger';
 import { FolderEntity, FolderIcon, FolderIconType } from '@joplin/lib/services/database/types';
 import stateToWhenClauseContext from '../../services/commands/stateToWhenClauseContext';
 import { store } from '@joplin/lib/reducer';
@@ -51,6 +51,7 @@ const StyledSpanFix = styled.span`
 
 interface Props {
 	themeId: number;
+	// eslint-disable-next-line @typescript-eslint/ban-types -- Old code before rule was applied
 	dispatch: Function;
 	folders: any[];
 	collapsedFolderIds: string[];
@@ -279,7 +280,7 @@ const SidebarComponent = (props: Props) => {
 		const menu = new Menu();
 
 		menu.append(
-			new MenuItem(menuUtils.commandToStatefulMenuItem('newFolder'))
+			new MenuItem(menuUtils.commandToStatefulMenuItem('newFolder')),
 		);
 
 		menu.popup({ window: bridge().window() });
@@ -295,12 +296,9 @@ const SidebarComponent = (props: Props) => {
 		const state: AppState = store().getState();
 
 		let deleteMessage = '';
-		let deleteButtonLabel = _('Remove');
-		if (itemType === BaseModel.TYPE_FOLDER) {
-			const folder = await Folder.load(itemId);
-			deleteMessage = _('Delete notebook "%s"?\n\nAll notes and sub-notebooks within this notebook will also be deleted.', substrWithEllipsis(folder.title, 0, 32));
-			deleteButtonLabel = _('Delete');
-		} else if (itemType === BaseModel.TYPE_TAG) {
+		const deleteButtonLabel = _('Remove');
+
+		if (itemType === BaseModel.TYPE_TAG) {
 			const tag = await Tag.load(itemId);
 			deleteMessage = _('Remove tag "%s" from all notes?', substrWithEllipsis(tag.title, 0, 32));
 		} else if (itemType === BaseModel.TYPE_SEARCH) {
@@ -316,33 +314,37 @@ const SidebarComponent = (props: Props) => {
 
 		if (itemType === BaseModel.TYPE_FOLDER && !item.encryption_applied) {
 			menu.append(
-				new MenuItem(menuUtils.commandToStatefulMenuItem('newFolder', itemId))
+				new MenuItem(menuUtils.commandToStatefulMenuItem('newFolder', itemId)),
 			);
 		}
 
-		menu.append(
-			new MenuItem({
-				label: deleteButtonLabel,
-				click: async () => {
-					const ok = bridge().showConfirmMessageBox(deleteMessage, {
-						buttons: [deleteButtonLabel, _('Cancel')],
-						defaultId: 1,
-					});
-					if (!ok) return;
-
-					if (itemType === BaseModel.TYPE_FOLDER) {
-						await Folder.delete(itemId);
-					} else if (itemType === BaseModel.TYPE_TAG) {
-						await Tag.untagAll(itemId);
-					} else if (itemType === BaseModel.TYPE_SEARCH) {
-						props.dispatch({
-							type: 'SEARCH_DELETE',
-							id: itemId,
+		if (itemType === BaseModel.TYPE_FOLDER) {
+			menu.append(
+				new MenuItem(menuUtils.commandToStatefulMenuItem('deleteFolder', itemId)),
+			);
+		} else {
+			menu.append(
+				new MenuItem({
+					label: deleteButtonLabel,
+					click: async () => {
+						const ok = bridge().showConfirmMessageBox(deleteMessage, {
+							buttons: [deleteButtonLabel, _('Cancel')],
+							defaultId: 1,
 						});
-					}
-				},
-			})
-		);
+						if (!ok) return;
+
+						if (itemType === BaseModel.TYPE_TAG) {
+							await Tag.untagAll(itemId);
+						} else if (itemType === BaseModel.TYPE_SEARCH) {
+							props.dispatch({
+								type: 'SEARCH_DELETE',
+								id: itemId,
+							});
+						}
+					},
+				}),
+			);
+		}
 
 		if (itemType === BaseModel.TYPE_FOLDER && !item.encryption_applied) {
 			menu.append(new MenuItem(menuUtils.commandToStatefulMenuItem('openFolderDialog', { folderId: itemId })));
@@ -362,7 +364,7 @@ const SidebarComponent = (props: Props) => {
 						click: async () => {
 							await InteropServiceHelper.export(props.dispatch, module, { sourceFolderIds: [itemId], plugins: pluginsRef.current });
 						},
-					})
+					}),
 				);
 			}
 
@@ -384,7 +386,7 @@ const SidebarComponent = (props: Props) => {
 				new MenuItem({
 					label: _('Export'),
 					submenu: exportMenu,
-				})
+				}),
 			);
 			if (Setting.value('notes.perFolderSortOrderEnabled')) {
 				menu.append(new MenuItem({
@@ -402,13 +404,13 @@ const SidebarComponent = (props: Props) => {
 					click: () => {
 						clipboard.writeText(getFolderCallbackUrl(itemId));
 					},
-				})
+				}),
 			);
 		}
 
 		if (itemType === BaseModel.TYPE_TAG) {
 			menu.append(new MenuItem(
-				menuUtils.commandToStatefulMenuItem('renameTag', itemId)
+				menuUtils.commandToStatefulMenuItem('renameTag', itemId),
 			));
 			menu.append(
 				new MenuItem({
@@ -416,7 +418,7 @@ const SidebarComponent = (props: Props) => {
 					click: () => {
 						clipboard.writeText(getTagCallbackUrl(itemId));
 					},
-				})
+				}),
 			);
 		}
 
@@ -429,7 +431,7 @@ const SidebarComponent = (props: Props) => {
 				itemType === ModelType.Folder && location === MenuItemLocation.FolderContextMenu
 			) {
 				menu.append(
-					new MenuItem(menuUtils.commandToStatefulMenuItem(view.commandName, itemId))
+					new MenuItem(menuUtils.commandToStatefulMenuItem(view.commandName, itemId)),
 				);
 			}
 		}
@@ -571,6 +573,7 @@ const SidebarComponent = (props: Props) => {
 		);
 	};
 
+	// eslint-disable-next-line @typescript-eslint/ban-types -- Old code before rule was applied
 	const renderHeader = (key: string, label: string, iconName: string, contextMenuHandler: Function = null, onPlusButtonClick: Function = null, extraProps: any = {}) => {
 		const headerClick = extraProps.onClick || null;
 		delete extraProps.onClick;
@@ -702,7 +705,7 @@ const SidebarComponent = (props: Props) => {
 			onDrop: onFolderDrop_,
 			['data-folder-id']: '',
 			toggleblock: 1,
-		})
+		}),
 	);
 
 	const foldersStyle = useMemo(() => {
@@ -722,14 +725,14 @@ const SidebarComponent = (props: Props) => {
 				style={foldersStyle}
 			>
 				{folderItems}
-			</div>
+			</div>,
 		);
 	}
 
 	items.push(
 		renderHeader('tagHeader', _('Tags'), 'icon-tags', null, null, {
 			toggleblock: 1,
-		})
+		}),
 	);
 
 	if (props.tags.length) {
@@ -740,7 +743,7 @@ const SidebarComponent = (props: Props) => {
 		items.push(
 			<div className="tags" key="tag_items" style={{ display: props.tagHeaderIsExpanded ? 'block' : 'none' }}>
 				{tagItems}
-			</div>
+			</div>,
 		);
 	}
 
@@ -762,7 +765,7 @@ const SidebarComponent = (props: Props) => {
 		syncReportText.push(
 			<StyledSyncReportText key={i}>
 				{lines[i]}
-			</StyledSyncReportText>
+			</StyledSyncReportText>,
 		);
 	}
 

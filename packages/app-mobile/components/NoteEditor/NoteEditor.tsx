@@ -8,7 +8,7 @@ import ExtendedWebView from '../ExtendedWebView';
 const React = require('react');
 import { forwardRef, RefObject, useImperativeHandle } from 'react';
 import { useEffect, useMemo, useState, useCallback, useRef } from 'react';
-import { View, ViewStyle } from 'react-native';
+import { LayoutChangeEvent, View, ViewStyle } from 'react-native';
 const { editorFont } = require('../global-style');
 
 import SelectionFormatting from './SelectionFormatting';
@@ -31,6 +31,7 @@ interface Props {
 	style: ViewStyle;
 	contentStyle?: ViewStyle;
 	toolbarEnabled: boolean;
+	readOnly: boolean;
 
 	onChange: ChangeEventHandler;
 	onSelectionChange: SelectionChangeEventHandler;
@@ -119,7 +120,7 @@ type OnSetVisibleCallback = (visible: boolean)=> void;
 type OnSearchStateChangeCallback = (state: SearchState)=> void;
 const useEditorControl = (
 	injectJS: OnInjectJSCallback, setLinkDialogVisible: OnSetVisibleCallback,
-	setSearchState: OnSearchStateChangeCallback, searchStateRef: RefObject<SearchState>
+	setSearchState: OnSearchStateChangeCallback, searchStateRef: RefObject<SearchState>,
 ): EditorControl => {
 	return useMemo(() => {
 		return {
@@ -131,7 +132,7 @@ const useEditorControl = (
 			},
 			select(anchor: number, head: number) {
 				injectJS(
-					`cm.select(${JSON.stringify(anchor)}, ${JSON.stringify(head)});`
+					`cm.select(${JSON.stringify(anchor)}, ${JSON.stringify(head)});`,
 				);
 			},
 			insertText(text: string) {
@@ -226,6 +227,7 @@ function NoteEditor(props: Props, ref: any) {
 		themeData: editorTheme(props.themeId),
 		katexEnabled: Setting.value('markdown.plugin.katex'),
 		spellcheckEnabled: Setting.value('editor.mobile.spellcheckEnabled'),
+		readOnly: props.readOnly,
 	};
 
 	const injectedJavaScript = `
@@ -297,7 +299,7 @@ function NoteEditor(props: Props, ref: any) {
 	};
 
 	const editorControl = useEditorControl(
-		injectJS, setLinkDialogVisible, setSearchState, searchStateRef
+		injectJS, setLinkDialogVisible, setSearchState, searchStateRef,
 	);
 
 	useImperativeHandle(ref, () => {
@@ -314,6 +316,7 @@ function NoteEditor(props: Props, ref: any) {
 
 		const msg = JSON.parse(data);
 
+		// eslint-disable-next-line @typescript-eslint/ban-types -- Old code before rule was applied
 		const handlers: Record<string, Function> = {
 			onLog: (event: any) => {
 				// eslint-disable-next-line no-console
@@ -365,6 +368,19 @@ function NoteEditor(props: Props, ref: any) {
 		console.error('NoteEditor: webview error');
 	}, []);
 
+	const [hasSpaceForToolbar, setHasSpaceForToolbar] = useState(true);
+	const toolbarEnabled = props.toolbarEnabled && hasSpaceForToolbar;
+
+	const onContainerLayout = useCallback((event: LayoutChangeEvent) => {
+		const containerHeight = event.nativeEvent.layout.height;
+
+		if (containerHeight < 140) {
+			setHasSpaceForToolbar(false);
+		} else {
+			setHasSpaceForToolbar(true);
+		}
+	}, []);
+
 	const toolbar = <MarkdownToolbar
 		style={{
 			// Don't show the markdown toolbar if there isn't enough space
@@ -376,15 +392,20 @@ function NoteEditor(props: Props, ref: any) {
 		selectionState={selectionState}
 		searchState={searchState}
 		onAttach={props.onAttach}
+		readOnly={props.readOnly}
 	/>;
 
 	// - `scrollEnabled` prevents iOS from scrolling the document (has no effect on Android)
 	//    when an editable region (e.g. a the full-screen NoteEditor) is focused.
 	return (
-		<View style={{
-			...props.style,
-			flexDirection: 'column',
-		}}>
+		<View
+			testID='note-editor-root'
+			onLayout={onContainerLayout}
+			style={{
+				...props.style,
+				flexDirection: 'column',
+			}}
+		>
 			<EditLinkDialog
 				visible={linkDialogVisible}
 				themeId={props.themeId}
@@ -415,7 +436,7 @@ function NoteEditor(props: Props, ref: any) {
 				searchState={searchState}
 			/>
 
-			{props.toolbarEnabled ? toolbar : null}
+			{toolbarEnabled ? toolbar : null}
 		</View>
 	);
 }

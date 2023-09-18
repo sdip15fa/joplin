@@ -12,6 +12,7 @@ interface Props {
 	visible: boolean;
 	style: any;
 	buttons: any[];
+	// eslint-disable-next-line @typescript-eslint/ban-types -- Old code before rule was applied
 	onClose: Function;
 	inputType: string;
 	description: string;
@@ -26,7 +27,7 @@ export default class PromptDialog extends React.Component<Props, any> {
 	private focusInput_: boolean;
 	private styles_: any;
 	private styleKey_: string;
-	private menuIsOpened_: boolean = false;
+	private menuIsOpened_ = false;
 
 	public constructor(props: Props) {
 		super(props);
@@ -274,28 +275,28 @@ export default class PromptDialog extends React.Component<Props, any> {
 			buttonComps.push(
 				<button key="create" disabled={!this.state.answer} style={styles.button} onClick={() => onClose(true, 'create')}>
 					{_('Create')}
-				</button>
+				</button>,
 			);
 		}
 		if (buttonTypes.indexOf('ok') >= 0) {
 			buttonComps.push(
 				<button key="ok" disabled={!this.state.answer} style={styles.button} onClick={() => onClose(true, 'ok')}>
 					{_('OK')}
-				</button>
+				</button>,
 			);
 		}
 		if (buttonTypes.indexOf('cancel') >= 0) {
 			buttonComps.push(
 				<button key="cancel" style={styles.button} onClick={() => onClose(false, 'cancel')}>
 					{_('Cancel')}
-				</button>
+				</button>,
 			);
 		}
 		if (buttonTypes.indexOf('clear') >= 0) {
 			buttonComps.push(
 				<button key="clear" style={styles.button} onClick={() => onClose(false, 'clear')}>
 					{_('Clear')}
-				</button>
+				</button>,
 			);
 		}
 

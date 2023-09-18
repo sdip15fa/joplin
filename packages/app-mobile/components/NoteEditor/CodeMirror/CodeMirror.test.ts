@@ -2,7 +2,6 @@
  * @jest-environment jsdom
  */
 
-
 import { EditorSettings } from '../types';
 import { initCodeMirror } from './CodeMirror';
 import { themeStyle } from '@joplin/lib/theme';
@@ -18,6 +17,7 @@ const createEditorSettings = (themeId: number) => {
 	const editorSettings: EditorSettings = {
 		katexEnabled: true,
 		spellcheckEnabled: true,
+		readOnly: false,
 		themeId,
 		themeData,
 	};

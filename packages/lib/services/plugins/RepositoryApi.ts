@@ -1,4 +1,4 @@
-import Logger from '../../Logger';
+import Logger from '@joplin/utils/Logger';
 import shim from '../../shim';
 import { PluginManifest } from './utils/types';
 const md5 = require('md5');
@@ -61,7 +61,7 @@ export default class RepositoryApi {
 	private manifests_: PluginManifest[] = null;
 	private githubApiUrl_: string;
 	private contentBaseUrl_: string;
-	private isUsingDefaultContentUrl_: boolean = true;
+	private isUsingDefaultContentUrl_ = true;
 
 	public constructor(baseUrl: string, tempDir: string) {
 		this.baseUrl_ = baseUrl;

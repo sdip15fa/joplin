@@ -198,6 +198,7 @@ function buildIndex(locales, stats) {
 
 function availableLocales(defaultLocale) {
 	const output = [defaultLocale];
+	// eslint-disable-next-line github/array-foreach -- Old code before rule was applied
 	fs.readdirSync(localesDir).forEach((path) => {
 		if (fileExtension(path) !== 'po') return;
 		const locale = filename(path);
@@ -312,7 +313,7 @@ async function updateReadmeWithStats(stats) {
 		`${rootDir}/README.md`,
 		'<!-- LOCALE-TABLE-AUTO-GENERATED -->\n',
 		'\n<!-- LOCALE-TABLE-AUTO-GENERATED -->',
-		translationStatusToMdTable(stats)
+		translationStatusToMdTable(stats),
 	);
 }
 

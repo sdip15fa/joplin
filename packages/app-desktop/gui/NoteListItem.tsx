@@ -58,6 +58,7 @@ interface NoteListItemProps {
 	onNoteDragOver: any;
 	onTitleClick: any;
 	onContextMenu(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void;
+	draggable: boolean;
 }
 
 function NoteListItem(props: NoteListItemProps, ref: any) {
@@ -83,11 +84,11 @@ function NoteListItem(props: NoteListItemProps, ref: any) {
 		dragItemPosition = 'bottom';
 	}
 
-	const onTitleClick = useCallback((event) => {
+	const onTitleClick = useCallback((event: any) => {
 		props.onTitleClick(event, props.item);
 	}, [props.onTitleClick, props.item]);
 
-	const onCheckboxClick = useCallback((event) => {
+	const onCheckboxClick = useCallback((event: any) => {
 		props.onCheckboxClick(event, props.item);
 	}, [props.onCheckboxClick, props.item]);
 
@@ -185,7 +186,7 @@ function NoteListItem(props: NoteListItemProps, ref: any) {
 				ref={anchorRef}
 				onContextMenu={props.onContextMenu}
 				href="#"
-				draggable={true}
+				draggable={props.draggable}
 				style={listItemTitleStyle}
 				onClick={onTitleClick}
 				onDragStart={props.onDragStart}

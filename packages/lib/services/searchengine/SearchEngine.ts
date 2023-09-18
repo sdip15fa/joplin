@@ -1,4 +1,4 @@
-import Logger from '../../Logger';
+import Logger from '@joplin/utils/Logger';
 import ItemChange from '../../models/ItemChange';
 import Setting from '../../models/Setting';
 import Note from '../../models/Note';
@@ -44,6 +44,7 @@ export default class SearchEngine {
 	public static SEARCH_TYPE_NONLATIN_SCRIPT = SearchType.Nonlatin;
 	public static SEARCH_TYPE_FTS = SearchType.Fts;
 
+	// eslint-disable-next-line @typescript-eslint/ban-types -- Old code before rule was applied
 	public dispatch: Function = (_o: any) => {};
 	private logger_ = new Logger();
 	private db_: any = null;
@@ -108,7 +109,7 @@ export default class SearchEngine {
 				queries.push({ sql: `
 				INSERT INTO notes_normalized(${SearchEngine.relevantFields})
 				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-				params: [n.id, n.title, n.body, n.user_created_time, n.user_updated_time, n.is_todo, n.todo_completed, n.todo_due, n.parent_id, n.latitude, n.longitude, n.altitude, n.source_url] }
+				params: [n.id, n.title, n.body, n.user_created_time, n.user_updated_time, n.is_todo, n.todo_completed, n.todo_due, n.parent_id, n.latitude, n.longitude, n.altitude, n.source_url] },
 				);
 			}
 
@@ -173,7 +174,7 @@ export default class SearchEngine {
 					ORDER BY id ASC
 					LIMIT 10
 				`,
-					[BaseModel.TYPE_NOTE, lastChangeId]
+					[BaseModel.TYPE_NOTE, lastChangeId],
 				);
 
 				if (!changes.length) break;
@@ -183,7 +184,7 @@ export default class SearchEngine {
 				const noteIds = changes.map(a => a.item_id);
 				const notes = await Note.modelSelectAll(`
 					SELECT ${SearchEngine.relevantFields}
-					FROM notes WHERE id IN ("${noteIds.join('","')}") AND is_conflict = 0 AND encryption_applied = 0`
+					FROM notes WHERE id IN ("${noteIds.join('","')}") AND is_conflict = 0 AND encryption_applied = 0`,
 				);
 
 				for (let i = 0; i < changes.length; i++) {
@@ -365,6 +366,7 @@ export default class SearchEngine {
 			const row = rows[i];
 			row.weight = 0;
 			for (let j = 0; j < numPhrases; j++) {
+				// eslint-disable-next-line github/array-foreach -- Old code before rule was applied
 				columns.forEach(column => {
 					const rowsWithHits = docsWithHits(X[i], column, j);
 					const frequencyHits = hitsThisRow(X[i], column, j);

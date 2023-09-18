@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import { syntaxTree } from '@codemirror/language';
 import { SyntaxNode } from '@lezer/common';
 import { EditorSelection, EditorState } from '@codemirror/state';
@@ -30,6 +26,8 @@ const findNodesWithName = (editor: EditorState, nodeName: string) => {
 };
 
 describe('markdownMathParser', () => {
+
+	jest.retryTimes(2);
 
 	it('should parse inline math that contains space characters, numbers, and symbols', async () => {
 		const documentText = '$3 + 3$';

@@ -88,6 +88,7 @@ export class Bridge {
 	// Perhaps the easiest would be to patch electron-context-menu to
 	// support the renderer process again. Or possibly revert to an old
 	// version of electron-context-menu.
+	// eslint-disable-next-line @typescript-eslint/ban-types -- Old code before rule was applied
 	public setupContextMenu(_spellCheckerMenuItemsHandler: Function) {
 		require('electron-context-menu')({
 			allWindows: [this.window()],
@@ -95,11 +96,7 @@ export class Bridge {
 			electronApp: this.electronApp(),
 
 			shouldShowMenu: (_event: any, params: any) => {
-				// params.inputFieldType === 'none' when right-clicking the text
-				// editor. This is a bit of a hack to detect it because in this
-				// case we don't want to use the built-in context menu but a
-				// custom one.
-				return params.isEditable && params.inputFieldType !== 'none';
+				return params.isEditable;
 			},
 
 			// menu: (actions: any, props: any) => {
@@ -255,6 +252,7 @@ export class Bridge {
 		return nativeTheme.shouldUseDarkColors;
 	}
 
+	// eslint-disable-next-line @typescript-eslint/ban-types -- Old code before rule was applied
 	public addEventListener(name: string, fn: Function) {
 		if (name === 'nativeThemeUpdated') {
 			nativeTheme.on('updated', fn);

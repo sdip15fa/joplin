@@ -1,5 +1,5 @@
 import Setting from './models/Setting';
-import Logger from './Logger';
+import Logger from '@joplin/utils/Logger';
 import Api, { RequestFile } from './services/rest/Api';
 import ApiResponse from './services/rest/ApiResponse';
 const urlParser = require('url');
@@ -20,6 +20,7 @@ export default class ClipperServer {
 	private server_: any = null;
 	private port_: number = null;
 	private api_: Api = null;
+	// eslint-disable-next-line @typescript-eslint/ban-types -- Old code before rule was applied
 	private dispatch_: Function;
 
 	private static instance_: ClipperServer = null;
@@ -52,6 +53,7 @@ export default class ClipperServer {
 		return this.logger_;
 	}
 
+	// eslint-disable-next-line @typescript-eslint/ban-types -- Old code before rule was applied
 	public setDispatch(d: Function) {
 		this.dispatch_ = d;
 	}
@@ -112,7 +114,7 @@ export default class ClipperServer {
 		} catch (error) {
 			this.setStartState(StartState.Idle);
 			this.logger().error(error);
-			return;
+			return null;
 		}
 
 		this.server_ = require('http').createServer();
